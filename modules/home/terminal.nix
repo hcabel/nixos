@@ -58,7 +58,7 @@ in
     functions = {
       clear = ''
         command clear
-        ${pkgs.fastfetch}/bin/fastfetch
+        fastfetch
         commandline -f repaint
       '';
       fish_greeting = "${pkgs.fastfetch}/bin/fastfetch";
