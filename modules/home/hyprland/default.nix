@@ -9,6 +9,7 @@
   imports = [
     ./binds.nix
     ./rules.nix
+    ./wallpaper.nix
   ];
 
   wayland.windowManager.hyprland = {
@@ -60,6 +61,8 @@
         };
       };
 
+      monitor = [ ", preferred, auto, 1" ];
+
       gesture = [
         "3, horizontal, workspace"
         "4, down, dispatcher, exec, dms ipc call hypr toggleOverview"
@@ -69,6 +72,83 @@
       general = {
         layout = "dwindle";
         resize_on_border = true;
+
+        # Saturn theme's blue → purple → pink border gradient, hardcoded —
+        # there's no theme engine generating this anymore.
+        "col.active_border" = "rgb(7aa2f7) rgb(a78bfa) rgb(f28fad) 45deg";
+        "col.inactive_border" = "rgb(1e1b33)";
+      };
+
+      # ── decoration ───────────────────────────────────────────────────────
+      decoration = {
+        rounding = 14;
+
+        active_opacity = 0.95;
+        inactive_opacity = 0.82;
+        fullscreen_opacity = 1.0;
+
+        blur = {
+          enabled = true;
+          size = 12;
+          passes = 4;
+          noise = 0.02;
+          contrast = 1.05;
+          brightness = 0.9;
+          vibrancy = 0.30;
+          vibrancy_darkness = 0.15;
+        };
+
+        shadow = {
+          enabled = true;
+          range = 24;
+          render_power = 3;
+          offset = "0 4";
+          color = "rgba(05070a99)";
+        };
+      };
+
+      group = {
+        "col.border_active" = "rgb(7aa2f7)";
+        "col.border_inactive" = "rgb(1e1b33)";
+
+        groupbar = {
+          font_family = "CaskaydiaMono Nerd Font";
+          font_size = 9;
+          "col.active" = "rgb(7aa2f7)";
+          "col.inactive" = "rgb(18162c)";
+          text_color = "rgb(ffffff)";
+        };
+      };
+
+      animations = {
+        enabled = true;
+
+        bezier = [
+          "wind, 0.05, 0.9, 0.1, 1.05"
+          "winIn, 0.1, 1.1, 0.1, 1.1"
+          "winOut, 0.3, -0.3, 0, 1"
+          "liner, 1, 1, 1, 1"
+          "md3_decel, 0.05, 0.7, 0.1, 1"
+          "menu_decel, 0.1, 1, 0, 1"
+          "menu_accel, 0.38, 0.04, 1, 0.07"
+        ];
+
+        animation = [
+          "windows, 1, 6.0, wind, slide"
+          "windowsIn, 1, 6.0, winIn, slide"
+          "windowsOut, 1, 5.0, winOut, slide"
+          "windowsMove, 1, 5.0, wind, slide"
+          "fade, 1, 3.0, md3_decel"
+          "layersIn, 1, 3.0, menu_decel, slide"
+          "layersOut, 1, 1.6, menu_accel"
+          "fadeLayersIn, 1, 2.0, menu_decel"
+          "fadeLayersOut, 1, 4.5, menu_accel"
+          "workspaces, 1, 5.0, wind"
+          "specialWorkspace, 1, 3.0, md3_decel, slidevert"
+          "border, 1, 1.0, liner"
+          # Always-on rotating gradient border.
+          "borderangle, 1, 30, liner, loop"
+        ];
       };
 
       dwindle = {
@@ -135,6 +215,11 @@
 
         "GDK_SCALE,1"
         "QT_SCALE_FACTOR,1"
+
+        "HYPRCURSOR_THEME,Bibata-Modern-Ice"
+        "HYPRCURSOR_SIZE,24"
+        "XCURSOR_THEME,Bibata-Modern-Ice"
+        "XCURSOR_SIZE,24"
       ];
 
       # ── autostart ────────────────────────────────────────────────────────

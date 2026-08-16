@@ -8,6 +8,7 @@
         ../../modules/os/boot.nix
         ../../modules/os/nvidia.nix
         ../../modules/os/desktop.nix
+        ../../modules/os/fonts.nix
         # ../../modules/os/plymouth.nix
         # ../../modules/os/login.nix
         # ../../modules/os/gaming.nix
