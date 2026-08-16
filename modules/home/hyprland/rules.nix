@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 # Tag-based window rules, in Hyprland 0.55's `match:` syntax.
 #

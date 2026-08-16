@@ -1,4 +1,9 @@
-{ config, inputs, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
@@ -46,4 +51,3 @@
     };
   };
 }
-

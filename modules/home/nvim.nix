@@ -1,9 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 # Clone my already existing Neovim config
 
 let
-  themeDir = config.hcabel.theme.currentDir;
   nvimConfigDir = "${config.xdg.configHome}/nvim";
   nvimConfigRepo = "git@github.com:hcabel/neovim-config.git";
 in

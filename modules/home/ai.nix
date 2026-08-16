@@ -1,43 +1,45 @@
 { pkgs, lib, ... }:
 
 let
-  claudeSettings = pkgs.writeText "claude-settings.json" (builtins.toJSON {
-    permissions = {
-      defaultMode = "plan";
+  claudeSettings = pkgs.writeText "claude-settings.json" (
+    builtins.toJSON {
+      permissions = {
+        defaultMode = "plan";
 
-      allow = [
-        "Read(//**)"
-      ];
+        allow = [
+          "Read(//**)"
+        ];
 
-      ask = [
-        "Bash(git add:*)"
-        "Bash(git commit:*)"
-        "Bash(git push:*)"
-        "Bash(git rebase:*)"
-        "Bash(git reset:*)"
-        "Bash(git merge:*)"
-        "Bash(git checkout:*)"
-        "Bash(git clean:*)"
-        "Bash(git tag:*)"
-        "Bash(git branch:*)"
-        "Bash(git stash:*)"
-        "Bash(git cherry-pick:*)"
-        "Bash(git restore:*)"
-      ];
+        ask = [
+          "Bash(git add:*)"
+          "Bash(git commit:*)"
+          "Bash(git push:*)"
+          "Bash(git rebase:*)"
+          "Bash(git reset:*)"
+          "Bash(git merge:*)"
+          "Bash(git checkout:*)"
+          "Bash(git clean:*)"
+          "Bash(git tag:*)"
+          "Bash(git branch:*)"
+          "Bash(git stash:*)"
+          "Bash(git cherry-pick:*)"
+          "Bash(git restore:*)"
+        ];
 
-      deny = [
-        "Read(~/.ssh/**)"
-        "Read(~/.gnupg/**)"
-        "Read(//var/lib/sops-nix/key.txt)"
-        "Read(~/.mozilla/firefox/**)"
-      ];
-    };
+        deny = [
+          "Read(~/.ssh/**)"
+          "Read(~/.gnupg/**)"
+          "Read(//var/lib/sops-nix/key.txt)"
+          "Read(~/.mozilla/firefox/**)"
+        ];
+      };
 
-    env = {
-      DISABLE_TELEMETRY = "1";
-      DISABLE_ERROR_REPORTING = "1";
-    };
-  });
+      env = {
+        DISABLE_TELEMETRY = "1";
+        DISABLE_ERROR_REPORTING = "1";
+      };
+    }
+  );
 in
 {
   home.packages = [ pkgs.claude-code ];
