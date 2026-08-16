@@ -1,14 +1,14 @@
 { config, pkgs, ... }:
 
-let
-  themeDir = config.hcabel.theme.currentDir;
-in
 {
   programs.ghostty = {
     enable = true;
     enableFishIntegration = true;
 
     settings = {
+      # background-blur not set because Hyprland already does it for us
+      background-opacity = 0.58;
+
       window-padding-x = 14;
       window-padding-y = 14;
       window-decoration = "none";

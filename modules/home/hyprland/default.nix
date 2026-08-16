@@ -5,6 +5,13 @@
   ...
 }:
 
+let
+  style = config.hcabel.style;
+  p = style.palette;
+
+  # Hyprland wants bare rrggbb inside rgb()/rgba(), not #rrggbb.
+  hex = lib.removePrefix "#";
+in
 {
   imports = [
     ./binds.nix
@@ -73,10 +80,9 @@
         layout = "dwindle";
         resize_on_border = true;
 
-        # Saturn theme's blue → purple → pink border gradient, hardcoded —
-        # there's no theme engine generating this anymore.
-        "col.active_border" = "rgb(7aa2f7) rgb(a78bfa) rgb(f28fad) 45deg";
-        "col.inactive_border" = "rgb(1e1b33)";
+        # Saturn's blue → purple → pink border gradient.
+        "col.active_border" = "rgb(${hex p.accent}) rgb(${hex p.accentMid}) rgb(${hex p.accentAlt}) 45deg";
+        "col.inactive_border" = "rgb(${hex p.borderInactive})";
       };
 
       # ── decoration ───────────────────────────────────────────────────────
@@ -103,20 +109,20 @@
           range = 24;
           render_power = 3;
           offset = "0 4";
-          color = "rgba(05070a99)";
+          color = "rgba(${hex p.base}99)";
         };
       };
 
       group = {
-        "col.border_active" = "rgb(7aa2f7)";
-        "col.border_inactive" = "rgb(1e1b33)";
+        "col.border_active" = "rgb(${hex p.border})";
+        "col.border_inactive" = "rgb(${hex p.borderInactive})";
 
         groupbar = {
-          font_family = "CaskaydiaMono Nerd Font";
+          font_family = style.font.mono;
           font_size = 9;
-          "col.active" = "rgb(7aa2f7)";
-          "col.inactive" = "rgb(18162c)";
-          text_color = "rgb(ffffff)";
+          "col.active" = "rgb(${hex p.accent})";
+          "col.inactive" = "rgb(${hex p.surface})";
+          text_color = "rgb(${hex p.text})";
         };
       };
 

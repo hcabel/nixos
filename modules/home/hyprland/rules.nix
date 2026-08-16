@@ -1,11 +1,46 @@
-{ ... }:
+{ config, lib, ... }:
 
 # Tag-based window rules, in Hyprland 0.55's `match:` syntax.
 #
 # Apps get tagged once, then rules act on tags. Your original had ~200 lines
 # matching editors and messengers you don't run — this keeps the structure and
 # trims the list to software that's actually installed.
+#
+# Layer surfaces get the same treatment one level up: they're grouped into
+# classes by intent, and `mkLayerRules` expands each class into rules. Adding a
+# new tool means adding one namespace string to the class that describes what it
+# is — never a new hand-written rule block.
 
+let
+  layerClasses = {
+    # Shell chrome: translucent panels that blur whatever they cover.
+    glass = {
+      namespaces = [
+        "quickshell.*"
+        "notifications"
+      ];
+      rules = [
+        "blur on"
+        "ignore_alpha 0.30"
+      ];
+    };
+
+    # Animation on this layer ruin there utility, so turn it off.
+    instant = {
+      namespaces = [
+        "selection" # wl-kbptr / slurp
+        "hyprpicker"
+      ];
+      rules = [ "no_anim on" ];
+    };
+  };
+
+  mkLayerRules = lib.concatLists (
+    lib.mapAttrsToList (
+      _class: c: lib.concatMap (ns: map (r: "match:namespace ^(${ns})$, ${r}") c.rules) c.namespaces
+    ) layerClasses
+  );
+in
 {
   wayland.windowManager.hyprland.settings = {
 
@@ -54,19 +89,15 @@
       "match:tag screenshare, opacity 1.0, no_blur on"
       "match:fullscreen true, idle_inhibit fullscreen"
 
+      # Ghostty owns its own transparency through background-opacity
+      "match:tag terminal, opacity 1.0 override"
+
       # ── behaviour fixes ────────────────────────────────────────────────────
       # XWayland drag-and-drop surfaces steal focus without this.
       "match:class ^$ match:title ^$ match:xwayland 1 match:floating 1, no_focus on"
       "match:class ^(jetbrains-.*)$, no_initial_focus on"
     ];
 
-    layerrule = [
-      # The shell's own surfaces get the glass treatment.
-      "match:namespace ^(quickshell.*)$, blur on"
-      "match:namespace ^(quickshell.*)$, ignore_alpha 0.3"
-      "match:namespace ^(dms.*)$, blur on"
-      "match:namespace ^(dms.*)$, ignore_alpha 0.3"
-      "match:namespace ^(notifications)$, blur on"
-    ];
+    layerrule = mkLayerRules;
   };
 }
