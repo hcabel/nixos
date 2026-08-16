@@ -4,6 +4,7 @@
     imports = [
         ../modules/home/style.nix
         ../modules/home/hyprland
+        ../modules/home/kbptr.nix
         ../modules/home/ai.nix
         # ../modules/home/shell.nix
         ../modules/home/terminal.nix
