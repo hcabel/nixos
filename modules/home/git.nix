@@ -36,9 +36,6 @@
       tag.gpgsign = true;
       user.signingkey = "C18C77C607AF017AAABE8E3025B7B118CCB7EA3C";
 
-      # Always use SSH instead of HTTPS for GitHub repos
-      url."git@github.com:".insteadOf = "https://github.com/";
-
       rerere = {
         enabled = true; # record and reuse conflict resolutions
         autoupdate = true;
