@@ -60,9 +60,9 @@ in
       "match:class ^(xdg-desktop-portal-gtk|org.freedesktop.impl.portal.desktop.gtk)$, tag +portal"
 
       # ── workspace routing ──────────────────────────────────────────────────
-      "match:tag projects, workspace 2"
+      "match:tag projects, workspace 5"
       "match:tag browser, workspace 4"
-      "match:tag terminal, workspace 5"
+      "match:tag terminal, workspace 6"
       "match:tag im, workspace 7"
       "match:tag gamestore, workspace 8"
       "match:tag games, workspace 9"

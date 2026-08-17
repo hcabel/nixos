@@ -84,15 +84,11 @@ in
       # Resize is in `binde` below, so that holding the key repeats.
 
       # ── groups ─────────────────────────────────────────────────────────
-      # $mod ALT + arrows is swapwindow, just above. It used to be listed here
-      # as moveintogroup too, which Hyprland ignored — the first bind for a
-      # chord wins — so those four lines never did anything.
       "$mod, G, togglegroup"
       "$mod ALT, G, moveoutofgroup"
-      "$mod ALT, TAB, changegroupactive, f"
-      "$mod ALT SHIFT, TAB, changegroupactive, b"
       "$mod CTRL, LEFT, changegroupactive, b"
       "$mod CTRL, RIGHT, changegroupactive, f"
+      # TODO [hcabel 2026-08-18]: Move into group
     ]
     ++ workspaceBinds
     ++ (lib.genList (

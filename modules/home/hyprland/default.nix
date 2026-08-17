@@ -80,6 +80,9 @@ in
         layout = "dwindle";
         resize_on_border = true;
 
+        gaps_out = 10; # Gaps between the inner content and the windows. (QS already har 10px gap)
+        gaps_in = style.sizes.gap;
+
         # Saturn's blue → purple → pink border gradient.
         "col.active_border" = "rgb(${hex p.accent}) rgb(${hex p.accentMid}) rgb(${hex p.accentAlt}) 45deg";
         "col.inactive_border" = "rgb(${hex p.borderInactive})";
@@ -87,7 +90,7 @@ in
 
       # ── decoration ───────────────────────────────────────────────────────
       decoration = {
-        rounding = 14;
+        rounding = style.sizes.rounding;
 
         active_opacity = 0.95;
         inactive_opacity = 0.82;
@@ -99,8 +102,8 @@ in
           passes = 4;
           noise = 0.02;
           contrast = 1.05;
-          brightness = 0.9;
-          vibrancy = 0.30;
+          brightness = 1.0;
+          vibrancy = 0.55;
           vibrancy_darkness = 0.15;
         };
 
@@ -236,7 +239,7 @@ in
       # Hyprland's — so the exec silently failed on every login.
       exec-once = [
         "[workspace 4 silent] firefox"
-        "[workspace 5 silent] ${pkgs.ghostty}/bin/ghostty"
+        "[workspace 6 silent] ${pkgs.ghostty}/bin/ghostty"
         # "[workspace 7 silent] ${pkgs.vesktop}/bin/vesktop"
       ];
     };
