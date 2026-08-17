@@ -79,7 +79,7 @@ in
 
   environment.systemPackages = [
     nvidia-offload
-    pkgs.nvtopPackages.full
+    pkgs.nvtopPackages.intel
   ];
 
   # ── gaming boot entry ──────────────────────────────────────────────────────
