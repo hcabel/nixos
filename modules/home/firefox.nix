@@ -41,6 +41,19 @@ in
         DisplayMenuBar = "default-off";
         SearchBar = "unified";
 
+        Bookmarks = [
+          {
+            Title = "Proton Mail";
+            URL = "https://mail.proton.me";
+            Placement = "toolbar";
+          }
+          {
+            Title = "Proton Calendar";
+            URL = "https://calendar.proton.me";
+            Placement = "toolbar";
+          }
+        ];
+
         # ---- EXTENSIONS ----
         # Check about:support for extension/add-on ID strings.
         # Valid strings for installation_mode are "allowed", "blocked", "force_installed" and "normal_installed".
@@ -84,6 +97,22 @@ in
           "browser.newtabpage.activity-stream.showSponsored" = lock-false;
           "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
+
+          "browser.bookmarks.addedImportButton" = lock-false; # Remove the default bookmark "import button" (not tested)
+
+          "browser.toolbars.bookmarks.visibility" = "newtab"; # Bookmark shows only on newpages (value: never, always)
+
+          "signon.rememberSignons" = lock-false; # Do not "Ask to save passwords"
+          "extensions.formautofill.creditCards.enabled" = lock-false; # Do not "Save and autofill payment info"
+          "extensions.formautofill.addresses.enabled" = lock-false; # Do not "Save and autofill addressesLearn"
+
+          "browser.startup.page" = "3"; # Open previous windows and tabs
+
+          "sidebar.verticalTabs" = lock-true; # Use vertical tabs
+          "sidebar.position_start" = lock-false; # vertical tabs on the right (true = left)
+          "sidebar.verticalTabs.dragToPinPromo.dismissed" = lock-true;
+
+          "sidebar.revamp" = lock-true;
         };
       };
     };
