@@ -1,6 +1,8 @@
 keys:
-  - &msi-laptop age1fuggswawg78x9dgzhpnav023d8p65j03uqfvdxf2sq5d03t9qugq6za2n8
+  - &hcabel age1aesqk5l6f2suv2h6p6k02ccn5rkhfu9pgy4ztj7hguqh3w0pmf5qdd9d3p
+
 creation_rules:
-  - path_regex: secrets/[^/]+\.yaml$
+  - path_regex: secrets\.yaml$
     key_groups:
-      - age: [*msi-laptop]
+      - age:
+          - *hcabel

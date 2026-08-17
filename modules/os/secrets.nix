@@ -13,9 +13,9 @@
     validateSopsFiles = false; # the file need not exist until you create one
 
     age = {
-      sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       keyFile = "/var/lib/sops-nix/key.txt";
-      generateKey = true;
+      generateKey = false;
+      sshKeyPaths = [ ];
     };
 
     secrets."ssh_private_key" = {
@@ -40,7 +40,12 @@
     };
   };
 
-  environment.systemPackages = [ pkgs.gnupg ];
+  environment.systemPackages = with pkgs; [
+    gnupg
+    sops
+    age
+    ssh-to-age
+  ];
 
   services.openssh = {
     enable = true;
