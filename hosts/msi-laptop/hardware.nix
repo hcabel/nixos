@@ -25,12 +25,13 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/2454c61c-9bb7-4777-8895-16ade61954a1";
+    device = "/dev/mapper/cryptroot";
     fsType = "ext4";
   };
+  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/b7f55701-bb74-423e-9cc6-e8d54c0598ea";
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/D660-1E04";
+    device = "/dev/disk/by-uuid/C82B-FA50";
     fsType = "vfat";
     options = [
       "fmask=0077"
