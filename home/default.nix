@@ -7,7 +7,6 @@
     ../modules/home/quickshell
     ../modules/home/kbptr.nix
     ../modules/home/ai.nix
-    # ../modules/home/shell.nix
     ../modules/home/terminal.nix
     ../modules/home/git.nix
     ../modules/home/firefox.nix
@@ -26,11 +25,19 @@
   # changes in each release.
   home.stateVersion = "26.05";
 
-  # xdg.enable = true;
-  # xdg.userDirs = {
-  #     enable = true;
-  #     createDirectories = true;
-  # };
+  # Video streaming platform for film/series/animer
+  home.packages = with pkgs; [
+    plex-desktop
+  ];
+
+  xdg = {
+    enable = true;
+    portal.xdgOpenUsePortal = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };
+  };
 
   gtk = {
     enable = true;

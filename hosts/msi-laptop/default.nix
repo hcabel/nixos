@@ -11,7 +11,8 @@
     ../../modules/os/fonts.nix
     # ../../modules/os/plymouth.nix
     # ../../modules/os/login.nix
-    # ../../modules/os/gaming.nix
+    ../../modules/os/gaming.nix
+    ../../modules/os/video.nix
     ../../modules/os/secrets.nix
   ];
 
