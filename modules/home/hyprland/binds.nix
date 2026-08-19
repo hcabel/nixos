@@ -57,7 +57,7 @@ in
       "$mod, grave, exec, dms ipc call hypr toggleOverview"
 
       # ── keyboard pointer control ───────────────────────────────────────
-      "$mod, S, exec, ${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click"
+      "$mod, S, exec, pkill wl-kbptr; ${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click"
       "$mod SHIFT, S, exec, ${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=tile,click"
 
       # Goes through logind so hypridle stays the single owner of the lock
