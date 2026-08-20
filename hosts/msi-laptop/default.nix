@@ -10,6 +10,7 @@
     ../../modules/sys/users.nix
     ../../modules/sys/nix.nix
     ../../modules/sys/secrets.nix
+    ../../modules/sys/font.nix
   ];
 
   time.timeZone = "Europe/Paris";
