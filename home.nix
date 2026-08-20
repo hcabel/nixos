@@ -4,6 +4,7 @@
   imports = [
     modules/user/video-production.nix
     modules/user/git.nix
+    modules/user/nvim.nix
   ];
 
   home.packages = with pkgs; [ ];
