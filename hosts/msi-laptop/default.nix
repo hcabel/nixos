@@ -9,6 +9,7 @@
       ../../modules/sys/gnome.nix
       ../../modules/sys/audio.nix
       ../../modules/sys/users.nix
+      ../../modules/sys/nix.nix
     ];
 
   networking.hostName = "msi-laptop";
@@ -27,7 +28,6 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  nixpkgs.config.allowUnfree = true;
   programs.firefox.enable = true;
   environment.systemPackages = with pkgs; [
     vim 
