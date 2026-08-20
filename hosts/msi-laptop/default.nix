@@ -1,16 +1,16 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware.nix
-      ../../modules/sys/boot.nix
-      ../../modules/sys/network.nix
-      ../../modules/sys/gnome.nix
-      ../../modules/sys/audio.nix
-      ../../modules/sys/users.nix
-      ../../modules/sys/nix.nix
-    ];
+  imports = [
+    ./hardware.nix
+    ../../modules/sys/boot.nix
+    ../../modules/sys/network.nix
+    ../../modules/sys/gnome.nix
+    ../../modules/sys/audio.nix
+    ../../modules/sys/users.nix
+    ../../modules/sys/nix.nix
+    ../../modules/sys/secrets.nix
+  ];
 
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -28,7 +28,7 @@
 
   programs.firefox.enable = true;
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     git
   ];
 

@@ -7,12 +7,17 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
    };
+   sops-nix = {
+     url = "github:Mic92/sops-nix";
+     inputs.nixpkgs.follows = "nixpkgs";
+   };
   };
 
   outputs =
     {
       nixpkgs,
       home-manager,
+      sops-nix,
       ... 
     }@inputs:
     let
@@ -30,6 +35,7 @@
           modules = [
             ./hosts/msi-laptop
             home-manager.nixosModules.home-manager
+            inputs.sops-nix.nixosModules.sops
             {
               home-manager = {
                 useGlobalPkgs = true;
