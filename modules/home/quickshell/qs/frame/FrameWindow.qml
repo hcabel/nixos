@@ -80,7 +80,7 @@ PanelWindow {
     }
 
     // Corner radius of the hole. Collapses along with the frame on fullscreen.
-    readonly property real corner: Style.rounding * (1 - fsAnimation)
+    readonly property real corner: Style.r.window * (1 - fsAnimation)
 
     // The inner boundary pushed `k` px out into the chrome. Everything that
     // traces the edge — the shadow bands, the hairline — is this at some k, so
@@ -97,7 +97,7 @@ PanelWindow {
 
         ShapePath {
             fillRule: ShapePath.OddEvenFill
-            fillColor: Qt.alpha(Style.surface, Style.barOpacity)
+            fillColor: Style.c.bg.glass
             strokeWidth: -1
 
             PathSvg {
@@ -126,7 +126,7 @@ PanelWindow {
     // the same falloff for the cost of a few stroked paths. It has no direction,
     // so it reads as ambient rather than cast from above.
     Repeater {
-        model: Style.shadowBands
+        model: Style.s.shadowBands
 
         Shape {
             id: band
@@ -139,19 +139,19 @@ PanelWindow {
             // is trying to avoid. The alpha is divided back out by the same
             // factor so the overlap doesn't double the shadow.
             readonly property real overlap: 2
-            readonly property real step: Style.shadowRange / Style.shadowBands
+            readonly property real step: Style.e.e2.blur / Style.s.shadowBands
             // Gaussian, and halved: a blurred edge only ever shows half its
             // nominal alpha on the outside, because the other half falls inside
             // the shape. Skipping that is what makes hand-rolled shadows read
             // as a black outline instead of a shadow.
-            readonly property real falloff: 0.5 * Math.exp(-Math.pow(2 * (index + 0.5) / Style.shadowBands, 2)) / overlap
+            readonly property real falloff: 0.5 * Math.exp(-Math.pow(2 * (index + 0.5) / Style.s.shadowBands, 2)) / overlap
 
             anchors.fill: parent
             preferredRendererType: Shape.CurveRenderer
 
             ShapePath {
                 fillColor: "transparent"
-                strokeColor: Qt.alpha(Style.shadow, Style.shadowOpacity * band.falloff)
+                strokeColor: Qt.alpha(Style.e.e2.color, Style.e.e2.color.a * band.falloff)
                 strokeWidth: band.step * band.overlap
 
                 PathSvg {
@@ -169,7 +169,7 @@ PanelWindow {
 
         ShapePath {
             fillColor: "transparent"
-            strokeColor: Qt.alpha(Style.text, Style.hairlineOpacity)
+            strokeColor: Style.c.hairline.base
             strokeWidth: 1
 
             PathSvg {
@@ -186,7 +186,7 @@ PanelWindow {
         anchors.top: parent.top
 
         height: 1
-        color: Qt.alpha(Style.text, Style.hairlineOpacity)
+        color: Style.c.hairline.base
     }
 
     TopBar {

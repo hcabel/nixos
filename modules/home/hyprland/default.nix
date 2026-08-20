@@ -11,6 +11,14 @@ let
 
   # Hyprland wants bare rrggbb inside rgb()/rgba(), not #rrggbb.
   hex = lib.removePrefix "#";
+
+  # The style tree as Qt ARGB ("#aarrggbb"); hyprland wants rgba(rrggbbaa)
+  rgba =
+    argb:
+    let
+      d = hex argb;
+    in
+    "rgba(${builtins.substring 2 6 d}${builtins.substring 0 2 d})";
 in
 {
   imports = [
@@ -80,17 +88,20 @@ in
         layout = "dwindle";
         resize_on_border = true;
 
-        gaps_out = 10; # Gaps between the inner content and the windows. (QS already har 10px gap)
-        gaps_in = style.sizes.gap;
+        # Gaps between the inner content and the windows. This has to agree with
+        # the QS frame rail, so it reads the same token instead of a literal.
+        gaps_out = style.sizes.rail;
+        gaps_in = style.sizes.gutter;
 
-        # Saturn's blue → purple → pink border gradient.
-        "col.active_border" = "rgb(${hex p.accent}) rgb(${hex p.accentMid}) rgb(${hex p.accentAlt}) 45deg";
-        "col.inactive_border" = "rgb(${hex p.borderInactive})";
+        # The rose accent trio: pink leads, turquoise supports, gold structures.
+        "col.active_border" =
+          "rgb(${hex p.accent.primary.fill}) rgb(${hex p.accent.secondary.fill}) rgb(${hex p.accent.structural.fill}) 45deg";
+        "col.inactive_border" = "rgb(${hex p.bg.surface})";
       };
 
       # ── decoration ───────────────────────────────────────────────────────
       decoration = {
-        rounding = style.sizes.rounding;
+        rounding = style.radius.window;
 
         active_opacity = 0.95;
         inactive_opacity = 0.82;
@@ -109,23 +120,23 @@ in
 
         shadow = {
           enabled = true;
-          range = 24;
+          range = style.elevation.e1.blur;
           render_power = 3;
-          offset = "0 4";
-          color = "rgba(${hex p.base}99)";
+          offset = "0 ${toString style.elevation.e1.y}";
+          color = rgba style.elevation.e1.color;
         };
       };
 
       group = {
-        "col.border_active" = "rgb(${hex p.border})";
-        "col.border_inactive" = "rgb(${hex p.borderInactive})";
+        "col.border_active" = "rgb(${hex p.accent.primary.fill})";
+        "col.border_inactive" = "rgb(${hex p.bg.surface})";
 
         groupbar = {
           font_family = style.font.mono;
-          font_size = 9;
-          "col.active" = "rgb(${hex p.accent})";
-          "col.inactive" = "rgb(${hex p.surface})";
-          text_color = "rgb(${hex p.text})";
+          font_size = style.type.role.tag.size;
+          "col.active" = "rgb(${hex p.accent.primary.fill})";
+          "col.inactive" = "rgb(${hex p.bg.surface})";
+          text_color = "rgb(${hex p.text.primary})";
         };
       };
 

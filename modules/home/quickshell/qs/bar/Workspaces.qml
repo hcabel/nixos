@@ -31,15 +31,15 @@ Rectangle {
         return out;
     }
 
-    readonly property int inset: 3
+    readonly property int inset: Style.s.gap[0]
 
     implicitWidth: row.implicitWidth + inset * 2
-    implicitHeight: row.implicitHeight + inset * 2
+    implicitHeight: Style.s.height.barControl
 
-    radius: 10
-    color: Qt.alpha(Style.text, Style.chromeFill)
-    border.width: 1
-    border.color: Qt.alpha(Style.text, Style.chromeBorder)
+    radius: Style.r.chip
+    color: Style.c.bg.rest
+    border.width: Style.s.strokeHair
+    border.color: Style.c.hairline.chip
 
     RowLayout {
         id: row
@@ -64,11 +64,17 @@ Rectangle {
                 readonly property bool urgent: (ws?.urgent ?? false) && !focused
                 readonly property bool occupied: (ws?.toplevels.values.length ?? 0) > 0
 
-                implicitWidth: content.implicitWidth + Style.padding * 2
-                implicitHeight: Style.barHeight - Style.padding * 2
-                radius: 8
+                implicitWidth: content.implicitWidth + Style.s.gap[3] * 2
+                implicitHeight: Style.s.height.rowAction
+                radius: Style.r.chip
 
-                color: focused ? Style.accentMid : urgent ? Qt.alpha(Style.red, 0.2) : occupied ? Qt.alpha(Style.text, Style.chromeFillStrong) : "transparent"
+                // `occupied` borrows the 8% neutral rung rather than naming a
+                // hover state: the pill sits on the 6% container and needs to
+                // separate from it. 8% is the only neutral fill above rest.
+                color: focused ? Style.c.accent.secondary.active : urgent ? Style.c.accent.primary.active : occupied ? Style.c.bg.hover : "transparent"
+
+                border.width: Style.s.strokeHair
+                border.color: focused ? Style.c.accent.secondary.line : urgent ? Style.c.accent.primary.line : "transparent"
 
                 // Glow behind the current workspace
                 Repeater {
@@ -86,13 +92,13 @@ Rectangle {
 
                         color: "transparent"
                         border.width: 2
-                        border.color: Qt.alpha(Style.accentMid, 0.28 * Math.pow(1 - index / 4, 2))
+                        border.color: Qt.alpha(Style.c.accent.secondary.fill, 0.28 * Math.pow(1 - index / 4, 2))
 
                         opacity: pill.focused ? 1 : 0
 
                         Behavior on opacity {
                             NumberAnimation {
-                                duration: Style.animFast
+                                duration: Style.m.dur.state
                             }
                         }
                     }
@@ -120,11 +126,11 @@ Rectangle {
                             radius: 2.5
 
                             visible: !pill.wsName
-                            color: pill.focused ? Qt.alpha(Style.base, 0.8) : pill.urgent ? Style.red : pill.occupied ? Style.accent : Style.muted
+                            color: pill.focused ? Style.c.accent.secondary.text : pill.urgent ? Style.c.status.critical : pill.occupied ? Style.c.text.secondary : Style.c.text.absent
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: Style.animFast
+                                    duration: Style.m.dur.state
                                 }
                             }
                         }
@@ -138,34 +144,35 @@ Rectangle {
                             visible: pill.wsName
                             text: pill.wsName
 
-                            font.weight: pill.focused ? Font.Bold : Font.Medium
-                            color: pill.focused ? Style.accentInk : pill.urgent ? Style.red : pill.occupied ? Qt.alpha(Style.text, Style.chromeLabel) : Style.muted
+                            font.weight: pill.focused ? Style.font.weight.bold : Style.font.weight.regular
+                            color: pill.focused ? Style.c.accent.secondary.text : pill.urgent ? Style.c.status.critical : pill.occupied ? Style.c.text.body : Style.c.text.absent
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: Style.animFast
+                                    duration: Style.m.dur.state
                                 }
                             }
                         }
                     }
                 }
 
+                // Lozenge stretch — the one 220ms case.
                 Behavior on implicitWidth {
                     NumberAnimation {
-                        duration: Style.animFast
-                        easing.type: Easing.OutCubic
+                        duration: Style.m.dur.open
+                        easing.bezierCurve: Style.m.ease
                     }
                 }
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: Style.animFast
+                        duration: Style.m.dur.state
                     }
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    anchors.topMargin: -(Style.barHeight - parent.height) / 2
+                    anchors.topMargin: -(Style.s.height.bar - parent.height) / 2
                     anchors.bottomMargin: anchors.topMargin
 
                     cursorShape: Qt.PointingHandCursor

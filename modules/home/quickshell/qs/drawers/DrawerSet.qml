@@ -7,15 +7,15 @@ Scope {
 
     required property ShellScreen screen
 
-    readonly property list<Drawer> all: [dashboard, controls]
+    readonly property list<Drawer> all: [controls, applauncher]
 
-    Dashboard { // Top bar overlay
-        id: dashboard
+    Controls {
+        id: controls
         screen: root.screen
     }
 
-    Controls { // Side panel
-        id: controls
+    Applauncher {
+        id: applauncher
         screen: root.screen
     }
 }

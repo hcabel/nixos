@@ -13,12 +13,12 @@ Item {
     required property var insets
 
     // Aligned against the inset so when a panel open top bar shrink
-    readonly property int contentLeft: insets.left + Style.padding
-    readonly property int contentRight: insets.right + Style.padding
+    readonly property int contentLeft: insets.left + Style.s.panelPad
+    readonly property int contentRight: insets.right + Style.s.panelPad
 
     readonly property DrawerState state: Drawers.forScreen(screen)
 
-    implicitHeight: Style.barHeight
+    implicitHeight: Style.s.height.bar
 
     Clock {
         anchors.left: parent.left
@@ -42,7 +42,7 @@ Item {
         anchors.rightMargin: root.contentRight
         anchors.verticalCenter: parent.verticalCenter
 
-        spacing: Style.gap
+        spacing: Style.s.gutter
 
         BarButton {
             text: "󰕮"

@@ -22,10 +22,10 @@ Scope {
     property real fsAnimation: hasFullscreen ? 1 : 0
 
     readonly property var base: ({
-            top: Style.barHeight,
-            right: Style.rail,
-            bottom: Style.rail,
-            left: Style.rail
+            top: Style.s.height.bar,
+            right: Style.s.rail,
+            bottom: Style.s.rail,
+            left: Style.s.rail
         })
 
     // Only animate visual, hyprland window handle it's own animation
@@ -42,7 +42,7 @@ Scope {
 
     Behavior on fsAnimation {
         NumberAnimation {
-            duration: Style.drawerDuration
+            duration: Style.m.dur.open
             easing.type: Easing.OutCubic
         }
     }

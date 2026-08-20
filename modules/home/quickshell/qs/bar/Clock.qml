@@ -15,11 +15,4 @@ StyledText {
         id: clock
         precision: SystemClock.Minutes
     }
-
-    MouseArea {
-        anchors.fill: parent
-        anchors.margins: -Style.padding
-        cursorShape: Qt.PointingHandCursor
-        onClicked: Drawers.toggle("dashboard", root.screen)
-    }
 }

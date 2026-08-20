@@ -46,7 +46,7 @@ in
       "$mod SHIFT, B, exec, $browser --private-window"
 
       # ── shell ──────────────────────────────────────────────────────────
-      "$mod, space, global, quickshell:dashboard"
+      "$mod, space, global, quickshell:applauncher"
       "$mod, N, global, quickshell:notifications"
       "$mod, U, exec, dms ipc call control-center toggle" # -> quickshell:controls
       "$mod ALT, V, exec, dms ipc call clipboard toggle" # -> quickshell:clipboard

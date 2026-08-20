@@ -19,22 +19,22 @@ Drawer {
     edge: "right"
     reserves: true
     fullEdge: true
-    depth: Style.panelWidth
+    depth: Style.s.panelWidth
 
     content: Component {
         ColumnLayout {
-            spacing: Style.gap * 2
+            spacing: Style.s.gap[4]
 
             StyledText {
                 Layout.alignment: Qt.AlignHCenter
 
                 text: "Controls"
-                font.pixelSize: Style.fontSize * 1.6
+                font.pixelSize: Style.type.role.h2.size
             }
 
             StyledText {
                 text: "panel · pushes windows"
-                color: Style.muted
+                color: Style.c.text.secondary
             }
         }
     }

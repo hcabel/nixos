@@ -9,15 +9,15 @@ Singleton {
 
     // The list of shortcuts the shell registrers (can be listed with: `hyprctl globalshortcuts`)
     readonly property var shortcuts: [
-        "dashboard",
         "notifications",
-        "closeAll"
+        "closeAll",
+        "applauncher"
     ]
 
     readonly property var actions: ({
-        "dashboard": () => Drawers.toggle("dashboard"),
         "notifications" : () => Drawers.toggle("controls"),
-        "closeAll" : () => Drawers.closeAll()
+        "closeAll" : () => Drawers.closeAll(),
+        "applauncher": () => Drawers.toggle("applauncher")
     })
 
     function invoke(name: string): bool {

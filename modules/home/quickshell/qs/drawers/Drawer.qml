@@ -41,7 +41,7 @@ QtObject {
     // 0 means "measure from the content". Breathing room around that content.
     property int depth: 0
     property int breadth: 0
-    property int padding: Style.padding
+    property int padding: Style.s.panelPad
 
     // Written back by the frame once the content has been loaded and has a size.
     property int measuredDepth
@@ -50,8 +50,8 @@ QtObject {
     readonly property int effectiveDepth: depth > 0 ? depth : measuredDepth
     readonly property int effectiveBreadth: breadth > 0 ? breadth : measuredBreadth
 
-    property int rounding: Style.drawerRounding
-    property int fillet: Style.fillet
+    property int rounding: Style.r.panel
+    property int fillet: Style.s.fillet
 
     property ShellScreen screen
     property Component content
@@ -69,7 +69,7 @@ QtObject {
 
     Behavior on progress {
         NumberAnimation {
-            duration: Style.drawerDuration
+            duration: Style.m.dur.open
             easing.type: Easing.OutCubic
         }
     }

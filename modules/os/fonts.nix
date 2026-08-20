@@ -4,7 +4,7 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      nerd-fonts.caskaydia-mono
+      nerd-fonts.space-mono
       nerd-fonts.symbols-only
       inter
       noto-fonts
@@ -13,7 +13,7 @@
     ];
 
     fontconfig.defaultFonts = {
-      monospace = [ "CaskaydiaMono Nerd Font" ];
+      monospace = [ "SpaceMono Nerd Font" ];
       sansSerif = [ "Inter" ];
       serif = [ "Noto Serif" ];
       emoji = [ "Noto Color Emoji" ];
