@@ -13,7 +13,7 @@ Scope {
 
     required property ShellScreen screen
 
-    readonly property var drawers: [dashboard, controls]
+    readonly property var drawers: drawerSet.all
 
     // Mode 1 = maximised, above is "real" fullscreen
     readonly property bool hasFullscreen:
@@ -47,13 +47,8 @@ Scope {
         }
     }
 
-    Dashboard { // Top bar overlay
-        id: dashboard
-        screen: root.screen
-    }
-
-    Controls { // Side panel
-        id: controls
+    DrawerSet {
+        id: drawerSet
         screen: root.screen
     }
 

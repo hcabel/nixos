@@ -33,8 +33,6 @@ Drawer {
             }
 
             StyledText {
-                Layout.alignment: Qt.AlignHCenter
-
                 text: "panel · pushes windows"
                 color: Style.muted
             }

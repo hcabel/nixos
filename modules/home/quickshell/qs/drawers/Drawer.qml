@@ -56,6 +56,9 @@ QtObject {
     property ShellScreen screen
     property Component content
 
+    Component.onCompleted: Drawers.register(root)
+    Component.onDestruction: Drawers.unregister(root)
+
     readonly property DrawerState state: Drawers.forScreen(screen)
     readonly property bool open: state ? (reserves ? state.panel : state.overlay) === name : false
 

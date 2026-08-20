@@ -3,10 +3,13 @@
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
+import qs
 import qs.frame
 
 ShellRoot {
     settings.watchFiles: true
+
+    Shortcuts {}
 
     Variants {
         model: Quickshell.screens // Reload UI when the screens change

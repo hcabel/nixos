@@ -48,7 +48,7 @@ Item {
             text: "󰕮"
 
             active: root.state?.panel === "controls"
-            onClicked: Drawers.toggle(root.state, "controls", true)
+            onClicked: Drawers.toggle("controls", root.screen)
         }
     }
 }

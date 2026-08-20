@@ -45,16 +45,16 @@ in
       "$mod, B, exec, $browser"
       "$mod SHIFT, B, exec, $browser --private-window"
 
-      # ── shell (DMS replaces rofi / swaync / wlogout / waybar) ──────────
-      "$mod, space, exec, dms ipc call spotlight toggle"
-      "$mod, N, exec, dms ipc call notifications toggle"
-      "$mod, U, exec, dms ipc call control-center toggle"
-      "$mod ALT, V, exec, dms ipc call clipboard toggle"
-      "$mod, Escape, exec, dms ipc call powermenu toggle"
-      "$mod, O, exec, dms ipc call dash open overview"
-      "$mod SHIFT, P, exec, dms ipc call processlist toggle"
-      "$mod, slash, exec, dms ipc call hypr toggleBinds"
-      "$mod, grave, exec, dms ipc call hypr toggleOverview"
+      # ── shell ──────────────────────────────────────────────────────────
+      "$mod, space, global, quickshell:dashboard"
+      "$mod, N, global, quickshell:notifications"
+      "$mod, U, exec, dms ipc call control-center toggle" # -> quickshell:controls
+      "$mod ALT, V, exec, dms ipc call clipboard toggle" # -> quickshell:clipboard
+      "$mod, Escape, exec, dms ipc call powermenu toggle" # -> quickshell:powermenu
+      "$mod, O, exec, dms ipc call dash open overview" # -> quickshell:overview
+      "$mod SHIFT, P, exec, dms ipc call processlist toggle" # -> quickshell:processlist
+      "$mod, slash, exec, dms ipc call hypr toggleBinds" # -> quickshell:binds
+      "$mod, grave, exec, dms ipc call hypr toggleOverview" # -> quickshell:overview
 
       # ── keyboard pointer control ───────────────────────────────────────
       "$mod, S, exec, pkill wl-kbptr; ${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click"
