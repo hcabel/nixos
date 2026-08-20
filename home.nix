@@ -5,6 +5,7 @@
     modules/user/video-production.nix
     modules/user/git.nix
     modules/user/nvim.nix
+    modules/user/ai.nix
   ];
 
   # This value determines the Home Manager release that your
