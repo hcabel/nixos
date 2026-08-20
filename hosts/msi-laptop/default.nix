@@ -1,16 +1,16 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware.nix
-      ../../modules/sys/boot.nix
-      ../../modules/sys/network.nix
-      ../../modules/sys/gnome.nix
-      ../../modules/sys/audio.nix
-      ../../modules/sys/users.nix
-      ../../modules/sys/nix.nix
-    ];
+  imports = [
+    ./hardware.nix
+    ../../modules/sys/boot.nix
+    ../../modules/sys/network.nix
+    ../../modules/sys/gnome.nix
+    ../../modules/sys/audio.nix
+    ../../modules/sys/users.nix
+    ../../modules/sys/nix.nix
+    ../../modules/sys/secrets.nix
+  ];
 
   networking.hostName = "msi-laptop";
 
@@ -30,7 +30,7 @@
 
   programs.firefox.enable = true;
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     git
   ];
 
