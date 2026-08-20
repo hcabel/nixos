@@ -8,6 +8,14 @@
     modules/user/ai.nix
   ];
 
+  gtk = {
+    enable = true;
+    font = {
+      name = "SpaceMono Nerd Font";
+      size = 11;
+    };
+  };
+
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
