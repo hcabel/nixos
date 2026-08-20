@@ -7,7 +7,7 @@ import Quickshell.Hyprland
 import qs.components
 import qs
 
-Rectangle {
+RowLayout {
     id: root
 
     required property ShellScreen screen
@@ -31,156 +31,100 @@ Rectangle {
         return out;
     }
 
-    readonly property int inset: Style.s.gap[0]
-
     implicitWidth: row.implicitWidth + inset * 2
     implicitHeight: Style.s.height.barControl
+    spacing: Style.s.gap[3]
 
-    radius: Style.r.chip
-    color: Style.c.bg.rest
-    border.width: Style.s.strokeHair
-    border.color: Style.c.hairline.chip
+    Repeater {
+      model: root.slots
 
-    RowLayout {
-        id: row
+      Rectangle {
+        id: pill
 
-        anchors.centerIn: parent
+        required property int modelData
 
-        spacing: root.inset + 1
+        readonly property HyprlandWorkspace ws: Hyprland.workspaces.values.find(w => w.id === pill.modelData && w.monitor === root.monitor) ?? null
 
-        Repeater {
-            model: root.slots
+        readonly property string wsName: ["", "", "", "", "web", "code", "", "chat"][modelData] ?? ""
+        readonly property bool focused: ws?.focused ?? false
+        readonly property bool urgent: (ws?.urgent ?? false) && !focused
+        readonly property bool occupied: (ws?.toplevels.values.length ?? 0) > 0
+
+        implicitWidth: content.implicitWidth
+        implicitHeight: Style.s.height.rowAction
+
+        color: "transparent"
+
+          Item {
+            id: content
+            clip: true
+            anchors.fill: parent
+
+            implicitWidth: pill.wsName ? label.implicitWidth : dot.implicitWidth
+            implicitHeight: pill.wsName ? label.implicitHeight : dot.implicitHeight
 
             Rectangle {
-                id: pill
+              id: dot
 
-                required property int modelData
+              anchors.centerIn: parent
 
-                readonly property HyprlandWorkspace ws: Hyprland.workspaces.values.find(w => w.id === pill.modelData && w.monitor === root.monitor) ?? null
+              implicitWidth: pill.focused ? 26 : 8
+              implicitHeight: 8
 
-                readonly property string wsName: ["", "", "", "", "web", "code", "", "chat"][modelData] ?? ""
+              bottomLeftRadius: Style.r.signatureCompact.bottomLeft
+              bottomRightRadius: 0
+              topLeftRadius: 0
+              topRightRadius: Style.r.signatureCompact.topRight
 
-                readonly property bool focused: ws?.focused ?? false
-                readonly property bool urgent: (ws?.urgent ?? false) && !focused
-                readonly property bool occupied: (ws?.toplevels.values.length ?? 0) > 0
+              visible: !pill.wsName
+              color: pill.focused ? Style.c.accent.secondary.text : pill.urgent ? Style.c.status.critical : pill.occupied ? Style.c.text.secondary : Style.c.text.absent
 
-                implicitWidth: content.implicitWidth + Style.s.gap[3] * 2
-                implicitHeight: Style.s.height.rowAction
-                radius: Style.r.chip
-
-                // `occupied` borrows the 8% neutral rung rather than naming a
-                // hover state: the pill sits on the 6% container and needs to
-                // separate from it. 8% is the only neutral fill above rest.
-                color: focused ? Style.c.accent.secondary.active : urgent ? Style.c.accent.primary.active : occupied ? Style.c.bg.hover : "transparent"
-
-                border.width: Style.s.strokeHair
-                border.color: focused ? Style.c.accent.secondary.line : urgent ? Style.c.accent.primary.line : "transparent"
-
-                // Glow behind the current workspace
-                Repeater {
-                    model: 4
-
-                    Rectangle {
-                        required property int index
-
-                        anchors.centerIn: parent
-
-                        width: pill.width + (index + 1) * 4
-                        height: pill.height + (index + 1) * 4
-                        radius: pill.radius + (index + 1) * 2
-                        z: -1
-
-                        color: "transparent"
-                        border.width: 2
-                        border.color: Qt.alpha(Style.c.accent.secondary.fill, 0.28 * Math.pow(1 - index / 4, 2))
-
-                        opacity: pill.focused ? 1 : 0
-
-                        Behavior on opacity {
-                            NumberAnimation {
-                                duration: Style.m.dur.state
-                            }
-                        }
-                    }
+              Behavior on color {
+                ColorAnimation {
+                  duration: Style.m.dur.state
                 }
+              }
 
-                Item {
-                    anchors.fill: parent
-                    clip: true
-
-                    Item {
-                        id: content
-
-                        anchors.centerIn: parent
-
-                        implicitWidth: pill.wsName ? label.implicitWidth : dot.implicitWidth
-                        implicitHeight: pill.wsName ? label.implicitHeight : dot.implicitHeight
-
-                        Rectangle {
-                            id: dot
-
-                            anchors.centerIn: parent
-
-                            implicitWidth: 5
-                            implicitHeight: 5
-                            radius: 2.5
-
-                            visible: !pill.wsName
-                            color: pill.focused ? Style.c.accent.secondary.text : pill.urgent ? Style.c.status.critical : pill.occupied ? Style.c.text.secondary : Style.c.text.absent
-
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: Style.m.dur.state
-                                }
-                            }
-                        }
-
-                        // Show name if any otherwise show a dot
-                        StyledText {
-                            id: label
-
-                            anchors.centerIn: parent
-
-                            visible: pill.wsName
-                            text: pill.wsName
-
-                            font.weight: pill.focused ? Style.font.weight.bold : Style.font.weight.regular
-                            color: pill.focused ? Style.c.accent.secondary.text : pill.urgent ? Style.c.status.critical : pill.occupied ? Style.c.text.body : Style.c.text.absent
-
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: Style.m.dur.state
-                                }
-                            }
-                        }
-                    }
+              // Lozenge stretch — the one 220ms case.
+              Behavior on implicitWidth {
+                NumberAnimation {
+                  duration: Style.m.dur.open
+                  easing.bezierCurve: Style.m.ease
                 }
+              }
 
-                // Lozenge stretch — the one 220ms case.
-                Behavior on implicitWidth {
-                    NumberAnimation {
-                        duration: Style.m.dur.open
-                        easing.bezierCurve: Style.m.ease
-                    }
+            }
+
+            // Show name if any otherwise show a dot
+            StyledText {
+              id: label
+
+              anchors.centerIn: parent
+
+              visible: pill.wsName
+              text: pill.wsName
+
+              font.weight: pill.focused ? Style.font.weight.bold : Style.font.weight.regular
+              color: pill.focused ? Style.c.accent.secondary.text : pill.urgent ? Style.c.status.critical : pill.occupied ? Style.c.text.body : Style.c.text.absent
+
+              Behavior on color {
+                ColorAnimation {
+                  duration: Style.m.dur.state
                 }
-
-                Behavior on color {
-                    ColorAnimation {
-                        duration: Style.m.dur.state
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    anchors.topMargin: -(Style.s.height.bar - parent.height) / 2
-                    anchors.bottomMargin: anchors.topMargin
-
-                    cursorShape: Qt.PointingHandCursor
-                    // Dispatching to a slot that does not exist yet is exactly
-                    // right — Hyprland creates it.
-                    onClicked: Hyprland.dispatch(`workspace ${pill.modelData}`)
-                }
+              }
             }
         }
+
+        // MouseArea {
+        //   anchors.fill: parent
+        //   anchors.topMargin: -(Style.s.height.bar - parent.height) / 2
+        //   anchors.bottomMargin: anchors.topMargin
+
+        //   cursorShape: Qt.PointingHandCursor
+        //   // Dispatching to a slot that does not exist yet is exactly
+        //   // right — Hyprland creates it.
+        //   onClicked: Hyprland.dispatch(`workspace ${pill.modelData}`)
+        // }
+      }
     }
 }
