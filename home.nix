@@ -3,6 +3,7 @@
 {
   imports = [
     modules/user/video-production.nix
+    modules/user/git.nix
   ];
 
   home.packages = with pkgs; [ ];
