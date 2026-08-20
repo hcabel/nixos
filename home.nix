@@ -1,7 +1,9 @@
 { pkgs, ... }:
 
 {
-  imports = [ ];
+  imports = [
+    modules/user/video-production.nix
+  ];
 
   home.packages = with pkgs; [ ];
 
