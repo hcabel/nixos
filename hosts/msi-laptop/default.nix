@@ -12,6 +12,7 @@
     ../../modules/sys/secrets.nix
     ../../modules/sys/font.nix
     ../../modules/sys/nvidia.nix
+    ../../modules/sys/swap.nix
   ];
 
   time.timeZone = "Europe/Paris";
