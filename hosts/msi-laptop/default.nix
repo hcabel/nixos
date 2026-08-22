@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware.nix
+    ./gpu.nix
     ../../modules/sys/boot.nix
     ../../modules/sys/network.nix
     ../../modules/sys/gnome.nix
