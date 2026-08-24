@@ -6,6 +6,7 @@
     modules/user/git.nix
     modules/user/nvim.nix
     modules/user/ai.nix
+    modules/user/hypr
   ];
 
   gtk = {
