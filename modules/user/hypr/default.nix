@@ -12,6 +12,7 @@ in
   imports = [
     ./binds.nix
     ./design.nix
+    ./window-rules.nix
   ];
 
   home.packages = with pkgs; [
