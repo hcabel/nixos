@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 let
   env = name: value: {
@@ -14,10 +14,6 @@ in
     ./design.nix
     ./window-rules.nix
     ./wallpaper.nix
-  ];
-
-  home.packages = with pkgs; [
-    kitty
   ];
 
   wayland.windowManager.hyprland = {

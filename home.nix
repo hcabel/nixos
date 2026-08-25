@@ -8,6 +8,7 @@
     modules/user/ai.nix
     modules/user/hypr
     modules/user/cursor.nix
+    modules/user/terminal.nix
   ];
 
   gtk = {

@@ -1,6 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
+  programs.fish.enable = true;
   users.users."hcabel" = {
     isNormalUser = true;
     description = "hcabel";
@@ -8,5 +9,6 @@
       "networkmanager"
       "wheel"
     ];
+    shell = pkgs.fish;
   };
 }
