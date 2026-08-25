@@ -7,6 +7,7 @@
     modules/user/nvim.nix
     modules/user/ai.nix
     modules/user/hypr
+    modules/user/cursor.nix
   ];
 
   gtk = {
