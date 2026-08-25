@@ -13,6 +13,7 @@ in
     ./binds.nix
     ./design.nix
     ./window-rules.nix
+    ./wallpaper.nix
   ];
 
   home.packages = with pkgs; [
