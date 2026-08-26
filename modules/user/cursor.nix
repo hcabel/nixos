@@ -1,12 +1,8 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
-  env = name: value: {
-    _args = [
-      name
-      value
-    ];
-  };
+  inherit (import ./hypr/lib.nix lib) env;
+
   hyprcursorTheme = "rose-pine-hyprcursor";
   xcursorTheme = "BreezeX-RosePine-Linux";
   cursorSize = 24;

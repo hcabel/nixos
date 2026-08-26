@@ -1,24 +1,9 @@
 { lib, pkgs, ... }:
 
 let
-  inherit (lib.generators) mkLuaInline;
+  inherit (import ./lib.nix lib) bind bindOpts;
 
   mod = "SUPER";
-
-  bind = keys: dispatcher: {
-    _args = [
-      keys
-      (mkLuaInline dispatcher)
-    ];
-  };
-
-  bindOpts = keys: dispatcher: opts: {
-    _args = [
-      keys
-      (mkLuaInline dispatcher)
-      opts
-    ];
-  };
 
   workspaceBinds = builtins.concatLists (
     builtins.genList (

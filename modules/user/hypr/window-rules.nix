@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
 let
-  tags = import ./window-tag.nix;
+  inherit (import ./lib.nix lib) on;
 
   tags = import ./window-tags.nix;
 

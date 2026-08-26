@@ -1,12 +1,7 @@
-{ ... }:
+{ lib, ... }:
 
 let
-  env = name: value: {
-    _args = [
-      name
-      value
-    ];
-  };
+  inherit (import ./lib.nix lib) env;
 in
 {
   imports = [

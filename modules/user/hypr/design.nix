@@ -1,6 +1,8 @@
-{ ... }:
+{ lib, ... }:
 
 let
+  inherit (import ./lib.nix lib) curve;
+
   accent-primary = "f23e96";
   accent-secondary = "12d6de";
   bg-surface = "2a2d31";
@@ -81,132 +83,13 @@ in
 
     # ── hl.curve ─────────────────────────────────────────────────────────
     curve = [
-      {
-        _args = [
-          "wind"
-          {
-            type = "bezier";
-            points = [
-              [
-                0.05
-                0.9
-              ]
-              [
-                0.1
-                1.05
-              ]
-            ];
-          }
-        ];
-      }
-      {
-        _args = [
-          "winIn"
-          {
-            type = "bezier";
-            points = [
-              [
-                0.1
-                1.1
-              ]
-              [
-                0.1
-                1.1
-              ]
-            ];
-          }
-        ];
-      }
-      {
-        _args = [
-          "winOut"
-          {
-            type = "bezier";
-            points = [
-              [
-                0.3
-                (-0.3)
-              ]
-              [
-                0
-                1
-              ]
-            ];
-          }
-        ];
-      }
-      {
-        _args = [
-          "liner"
-          {
-            type = "bezier";
-            points = [
-              [
-                1
-                1
-              ]
-              [
-                1
-                1
-              ]
-            ];
-          }
-        ];
-      }
-      {
-        _args = [
-          "md3_decel"
-          {
-            type = "bezier";
-            points = [
-              [
-                0.05
-                0.7
-              ]
-              [
-                0.1
-                1
-              ]
-            ];
-          }
-        ];
-      }
-      {
-        _args = [
-          "menu_decel"
-          {
-            type = "bezier";
-            points = [
-              [
-                0.1
-                1
-              ]
-              [
-                0
-                1
-              ]
-            ];
-          }
-        ];
-      }
-      {
-        _args = [
-          "menu_accel"
-          {
-            type = "bezier";
-            points = [
-              [
-                0.38
-                0.04
-              ]
-              [
-                1
-                0.07
-              ]
-            ];
-          }
-        ];
-      }
+      (curve "wind" 0.05 0.9 0.1 1.05)
+      (curve "winIn" 0.1 1.1 0.1 1.1)
+      (curve "winOut" 0.3 (-0.3) 0 1)
+      (curve "liner" 1 1 1 1)
+      (curve "md3_decel" 0.05 0.7 0.1 1)
+      (curve "menu_decel" 0.1 1 0 1)
+      (curve "menu_accel" 0.38 0.04 1 0.07)
     ];
 
     # ── hl.animation ─────────────────────────────────────────────────────
