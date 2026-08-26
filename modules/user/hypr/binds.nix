@@ -57,7 +57,8 @@ in
     # ── mouse ──────────────────────────────────────────────────────────────
     (bindOpts "${mod} + mouse:272" "hl.dsp.window.drag()" { mouse = true; })
     (bindOpts "${mod} + mouse:273" "hl.dsp.window.resize()" { mouse = true; })
-
+    (bind "${mod} + S" ''hl.dsp.exec_cmd("hypr-kbptr detect")'')
+    (bind "${mod} + SHIFT + S" ''hl.dsp.exec_cmd("hypr-kbptr grid")'')
   ]
   ++ workspaceBinds;
 }

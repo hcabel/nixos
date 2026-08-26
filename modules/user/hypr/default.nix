@@ -9,6 +9,8 @@ in
     ./design.nix
     ./window-rules.nix
     ./wallpaper.nix
+    ./kbptr.nix
+    ./layer-rules.nix
   ];
 
   wayland.windowManager.hyprland = {
