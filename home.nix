@@ -9,6 +9,7 @@
     modules/user/hypr
     modules/user/cursor.nix
     modules/user/terminal.nix
+    modules/user/firefox.nix
   ];
 
   gtk = {
