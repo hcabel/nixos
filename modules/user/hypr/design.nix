@@ -12,6 +12,10 @@ in
 {
   wayland.windowManager.hyprland.settings = {
     config = {
+      misc = {
+        background_color = "rgb(${bg-surface})";
+      };
+
       general = {
         layout = "dwindle";
         resize_on_border = true;

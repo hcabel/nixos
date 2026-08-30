@@ -9,7 +9,7 @@
       wallpaper = [
         {
           monitor = "*";
-          path = "${./saturn-rings.jpg}";
+          path = "${../quickshell/qs/saturn-rings.jpg}";
         }
       ];
     };

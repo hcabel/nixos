@@ -10,6 +10,7 @@
     modules/user/cursor.nix
     modules/user/terminal.nix
     modules/user/firefox.nix
+    modules/user/quickshell
   ];
 
   gtk = {
