@@ -128,7 +128,7 @@ PanelWindow {
         preferredRendererType: Shape.CurveRenderer
 
         ShapePath {
-            fillColor: Style.surface
+            fillColor: Style.surfaceTranslucent
             strokeWidth: 0
             fillRule: ShapePath.OddEvenFill
 

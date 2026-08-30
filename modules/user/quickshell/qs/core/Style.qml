@@ -7,6 +7,10 @@ Singleton {
     id: root
 
     readonly property color surface: "#2a2d31"
+
+    readonly property real surfaceOpacity: 0.75
+    readonly property color surfaceTranslucent: Qt.rgba(surface.r, surface.g, surface.b, surfaceOpacity)
+
     readonly property color text: "#faf3e6"
     readonly property color textMuted: Qt.rgba(text.r, text.g, text.b, 0.6)
     readonly property color accent: "#7aa2f7"
