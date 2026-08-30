@@ -8,6 +8,10 @@ PanelWindow {
 
     property alias panels: panelHost.data
 
+    property alias barLeft: bar.leftContent
+    property alias barCenter: bar.centerContent
+    property alias barRight: bar.rightContent
+
     // The resting insets, grown by every panel sitting on each edge.
     function grow(depthOf) {
         const out = {
@@ -93,8 +97,6 @@ PanelWindow {
 
     color: "transparent"
 
-    // Chrome takes no clicks; an open panel does. Three regions because one
-    // panel per side is all there can ever be.
     mask: Region {
         PanelMask {
             edge: "right"
@@ -106,6 +108,18 @@ PanelWindow {
 
         PanelMask {
             edge: "left"
+        }
+
+        BarMask {
+            slot: bar.slots[0]
+        }
+
+        BarMask {
+            slot: bar.slots[1]
+        }
+
+        BarMask {
+            slot: bar.slots[2]
         }
     }
 
@@ -140,6 +154,17 @@ PanelWindow {
         insets: root.insets
     }
 
+    // Last so the rail shadow does not wash over the bar's contents
+    Bar {
+        id: bar
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        height: root.insets.top
+    }
+
     component PanelMask: Region {
         required property string edge
 
@@ -149,5 +174,16 @@ PanelWindow {
         y: panel ? panel.y : 0
         width: panel ? panel.width : 0
         height: panel ? panel.height : 0
+    }
+
+    // Sound without mapToItem only because the bar sits at the window origin,
+    // which makes a slot's own coordinates window coordinates already.
+    component BarMask: Region {
+        required property Item slot
+
+        x: bar.x + slot.x
+        y: bar.y + slot.y
+        width: slot.width
+        height: slot.height
     }
 }

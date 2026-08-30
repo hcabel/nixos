@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Io
 import qs.core
+import qs.modules
 import qs.panels
 
 ShellRoot {
@@ -45,6 +46,10 @@ ShellRoot {
                 id: frame
 
                 screen: instance.modelData
+
+                barCenter: Workspaces {
+                    screen: instance.modelData
+                }
 
                 panels: [
                     DemoPanel {},

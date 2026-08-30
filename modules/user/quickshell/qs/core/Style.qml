@@ -22,10 +22,18 @@ Singleton {
     readonly property int fontSizeTitle: 18
     readonly property int fontSizeDetail: 11
 
+    readonly property int workspaceCount: 9
+
+    readonly property var workspaceNames: ({
+        4: "web",
+        5: "code",
+        7: "chat"
+    })
+
     readonly property var insets: ({
-            top: 30,
-            bottom: 10,
-            left: 10,
-            right: 10
-        })
+        top: 30,
+        bottom: 10,
+        left: 10,
+        right: 10
+    })
 }
