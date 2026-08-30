@@ -48,6 +48,7 @@ ShellRoot {
 
                 panels: [
                     DemoPanel {},
+                    AppLauncher {}
                 ]
             }
         }

@@ -20,11 +20,13 @@ let
   );
 
   terminal = "${pkgs.kitty}/bin/kitty";
+  qscall = "qs -c hcabel ipc call";
 in
 {
   wayland.windowManager.hyprland.settings.bind = [
     # ── launching ──────────────────────────────────────────────────────────
     (bind "${mod} + Return" ''hl.dsp.exec_cmd("${terminal}")'')
+    (bind "${mod} + Space" ''hl.dsp.exec_cmd("${qscall} panels toggle left AppLauncher")'')
 
     # ── window management ──────────────────────────────────────────────────
     (bind "${mod} + W" "hl.dsp.window.close()")

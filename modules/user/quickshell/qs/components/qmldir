@@ -1,0 +1,5 @@
+module qs.components
+Button 1.0 Button.qml
+DetailText 1.0 DetailText.qml
+InputBar 1.0 InputBar.qml
+TitleText 1.0 TitleText.qml
