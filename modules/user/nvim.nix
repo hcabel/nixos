@@ -36,6 +36,8 @@ in
       # c/c++
       clang-tools
       gcc # nvim-treesitter needs a real C compiler to build parsers
+      # qml
+      qt6.qtdeclarative
       # other commands I'm relying on
       tree-sitter
       ripgrep
