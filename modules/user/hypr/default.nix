@@ -11,6 +11,7 @@ in
     ./window-rules.nix
     ./wallpaper.nix
     ./kbptr.nix
+    ./lock.nix
     ./layer-rules.nix
   ];
 

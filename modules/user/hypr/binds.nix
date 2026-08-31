@@ -27,6 +27,7 @@ in
     # ── launching ──────────────────────────────────────────────────────────
     (bind "${mod} + Return" ''hl.dsp.exec_cmd("${terminal}")'')
     (bind "${mod} + Space" ''hl.dsp.exec_cmd("${qscall} tabs toggle AppLauncher")'')
+    (bind "${mod} + Escape" ''hl.dsp.exec_cmd("${qscall} tabs toggle Power")'')
 
     # ── window management ──────────────────────────────────────────────────
     (bind "${mod} + W" "hl.dsp.window.close()")

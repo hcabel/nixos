@@ -74,7 +74,8 @@ ShellRoot {
                 ]
 
                 tabs: [
-                    AppLauncher {}
+                    AppLauncher {},
+                    Power {}
                 ]
             }
         }

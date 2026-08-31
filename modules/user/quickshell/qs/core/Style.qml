@@ -14,6 +14,7 @@ Singleton {
     readonly property color text: "#faf3e6"
     readonly property color textMuted: Qt.rgba(text.r, text.g, text.b, 0.6)
     readonly property color accent: "#7aa2f7"
+    readonly property color danger: "#f7768e"
     readonly property string fontFamily: "SpaceMono Nerd Font"
 
     readonly property int duration: 250

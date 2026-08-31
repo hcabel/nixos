@@ -15,7 +15,9 @@ Singleton {
         if (root.isOpen(name))
             return;
 
-        const next = Object.assign({}, root.opened);
+        // Tabs are mutually exclusive: every one of them sits centred on the
+        // same edge, so a second open tab would draw straight over the first.
+        const next = {};
 
         next[name] = true;
         root.opened = next;

@@ -8,6 +8,7 @@
     ../../modules/sys/network.nix
     ../../modules/sys/gnome.nix
     ../../modules/sys/hyprland.nix
+    ../../modules/sys/hyprlock.nix
     ../../modules/sys/audio.nix
     ../../modules/sys/users.nix
     ../../modules/sys/nix.nix
