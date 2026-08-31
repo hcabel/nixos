@@ -6,9 +6,9 @@ import Quickshell
 Singleton {
     id: root
 
-    readonly property color surface: "#2a2d31"
+    readonly property color surface: "#18162C"
 
-    readonly property real surfaceOpacity: 0.75
+    readonly property real surfaceOpacity: 0.25
     readonly property color surfaceTranslucent: Qt.rgba(surface.r, surface.g, surface.b, surfaceOpacity)
 
     readonly property color text: "#faf3e6"

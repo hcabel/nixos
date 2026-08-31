@@ -5,5 +5,8 @@ ExclusionZone 1.0 ExclusionZone.qml
 Frame 1.0 Frame.qml
 Panel 1.0 Panel.qml
 singleton PanelState 1.0 PanelState.qml
+singleton RailPath 1.0 RailPath.qml
 RailShadow 1.0 RailShadow.qml
 singleton Style 1.0 Style.qml
+Tab 1.0 Tab.qml
+singleton TabState 1.0 TabState.qml

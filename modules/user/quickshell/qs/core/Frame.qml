@@ -7,6 +7,7 @@ PanelWindow {
     id: root
 
     property alias panels: panelHost.data
+    property alias tabs: tabHost.data
 
     property alias barLeft: bar.leftContent
     property alias barCenter: bar.centerContent
@@ -34,25 +35,6 @@ PanelWindow {
     readonly property var insets: root.grow(p => p.liveDepth)
     readonly property var reserved: root.grow(p => p.targetDepth)
 
-    // The screen rectangle, then the viewport walked clockwise. Both subpaths
-    // come out of one string so they land in one OddEvenFill ShapePath: the
-    // outer encloses, the inner cuts the hole.
-    function viewportPath(w, h, ins, corner) {
-        const screen = `M0,0 H${w} V${h} H0 Z`;
-
-        const l = ins.left;
-        const t = ins.top;
-        const r = w - ins.right;
-        const b = h - ins.bottom;
-
-        if (r - l < 2 || b - t < 2)
-            return screen;
-
-        const c = Math.max(0, Math.min(corner, (r - l) / 2, (b - t) / 2));
-
-        return `${screen} M${l + c},${t} H${r - c} A${c},${c} 0 0 1 ${r},${t + c} V${b - c} A${c},${c} 0 0 1 ${r - c},${b} H${l + c} A${c},${c} 0 0 1 ${l},${b - c} V${t + c} A${c},${c} 0 0 1 ${l + c},${t} Z`;
-    }
-
     function panelOn(edge) {
         const cs = panelHost.children;
 
@@ -64,6 +46,26 @@ PanelWindow {
         return null;
     }
 
+    // The open tabs, in declaration order. The mask below needs them by index
+    // because a Region is a plain QObject, so no Repeater can populate it.
+    function openTabs() {
+        const cs = tabHost.children;
+        const out = [];
+
+        for (let i = 0; i < cs.length; i++) {
+            if (cs[i].open)
+                out.push(cs[i]);
+        }
+
+        return out;
+    }
+
+    function tabAt(slot) {
+        const on = root.openTabs();
+
+        return slot < on.length ? on[slot] : null;
+    }
+
     // Keyboard focus is requested from the compositor only while a panel
     // that needs it (eg. AppLauncher's search box) is actually open, so the
     // chrome surface never steals input from the rest of the desktop. It is
@@ -71,11 +73,13 @@ PanelWindow {
     // means a launcher opened from a keybind would never receive the keystrokes
     // it was opened to collect.
     function keyboardWanted() {
-        const cs = panelHost.children;
+        const hosts = [panelHost.children, tabHost.children];
 
-        for (let i = 0; i < cs.length; i++) {
-            if (cs[i].open && cs[i].wantsFocus)
-                return true;
+        for (let h = 0; h < hosts.length; h++) {
+            for (let i = 0; i < hosts[h].length; i++) {
+                if (hosts[h][i].open && hosts[h][i].wantsFocus)
+                    return true;
+            }
         }
 
         return false;
@@ -121,6 +125,22 @@ PanelWindow {
         BarMask {
             slot: bar.slots[2]
         }
+
+        TabMask {
+            slot: 0
+        }
+
+        TabMask {
+            slot: 1
+        }
+
+        TabMask {
+            slot: 2
+        }
+
+        TabMask {
+            slot: 3
+        }
     }
 
     Shape {
@@ -133,7 +153,7 @@ PanelWindow {
             fillRule: ShapePath.OddEvenFill
 
             PathSvg {
-                path: root.viewportPath(root.width, root.height, root.insets, Style.corner)
+                path: RailPath.plate(root.width, root.height, root.insets, Style.corner, tabHost.children)
             }
         }
     }
@@ -148,10 +168,22 @@ PanelWindow {
         readonly property var insets: root.insets
     }
 
+    // Tabs sit alongside panels and get the same treatment, but deliberately
+    // outside panelHost: grow() sums every child it finds there, so a tab in
+    // that host would reserve edge depth it is not supposed to have.
+    Item {
+        id: tabHost
+
+        anchors.fill: parent
+
+        readonly property var insets: root.insets
+    }
+
     RailShadow {
         anchors.fill: parent
 
         insets: root.insets
+        tabs: tabHost.children
     }
 
     // Last so the rail shadow does not wash over the bar's contents
@@ -174,6 +206,19 @@ PanelWindow {
         y: panel ? panel.y : 0
         width: panel ? panel.width : 0
         height: panel ? panel.height : 0
+    }
+
+    // Fixed slots rather than one per tab: Region is a plain QObject, so it
+    // cannot be produced by a Repeater. A slot with no tab collapses to zero.
+    component TabMask: Region {
+        required property int slot
+
+        readonly property Item tab: root.tabAt(slot)
+
+        x: tab ? tab.x : 0
+        y: tab ? tab.y : 0
+        width: tab ? tab.width : 0
+        height: tab ? tab.height : 0
     }
 
     // Sound without mapToItem only because the bar sits at the window origin,

@@ -5,14 +5,14 @@ import Quickshell.Widgets
 import qs.core
 import qs.components
 
-Panel {
+Tab {
     id: root
 
     name: "AppLauncher"
     wantsFocus: true
 
     readonly property int cell: 92
-    readonly property int columns: 4
+    readonly property int columns: 8
     readonly property int rows: 2
 
     property string query: ""
@@ -51,11 +51,10 @@ Panel {
         if (needle === "")
             return all.sort((a, b) => a.name.localeCompare(b.name));
 
-        return all
-            .map(e => ({ entry: e, score: root.rank(e, needle) }))
-            .filter(m => m.score >= 0)
-            .sort((a, b) => a.score - b.score || a.entry.name.localeCompare(b.entry.name))
-            .map(m => m.entry);
+        return all.map(e => ({
+                    entry: e,
+                    score: root.rank(e, needle)
+                })).filter(m => m.score >= 0).sort((a, b) => a.score - b.score || a.entry.name.localeCompare(b.entry.name)).map(m => m.entry);
     }
 
     onResultsChanged: grid.currentIndex = 0
@@ -65,7 +64,7 @@ Panel {
             return;
 
         entry.execute();
-        PanelState.close(root.edge);
+        TabState.close(root.name);
     }
 
     onOpenChanged: {
@@ -113,7 +112,7 @@ Panel {
                     // grid; Up/Down step a row, Tab steps a single tile.
                     onKeyPressed: event => {
                         if (event.key === Qt.Key_Escape)
-                            PanelState.close(root.edge);
+                            TabState.close(root.name);
                         else if (event.key === Qt.Key_Up)
                             grid.moveCurrentIndexUp();
                         else if (event.key === Qt.Key_Down)
@@ -145,7 +144,7 @@ Panel {
                     cellWidth: root.cell
                     cellHeight: root.cell
 
-                    flow: root.vertical ? GridView.FlowLeftToRight : GridView.FlowTopToBottom
+                    flow: GridView.FlowLeftToRight
                     boundsBehavior: Flickable.StopAtBounds
 
                     model: root.results
@@ -198,9 +197,6 @@ Panel {
                                         source: icon.path
                                     }
 
-                                    // The theme carries no generic application
-                                    // icon, so an entry we cannot resolve gets a
-                                    // monogram instead of an empty hole.
                                     Rectangle {
                                         anchors.fill: parent
 

@@ -3,6 +3,7 @@ import Quickshell.Io
 import qs.core
 import qs.modules
 import qs.panels
+import qs.tabs
 
 ShellRoot {
     // qs -c hcabel ipc call panels toggle left demo
@@ -19,6 +20,23 @@ ShellRoot {
 
         function state(): string {
             return JSON.stringify(PanelState.state);
+        }
+    }
+
+    // qs -c hcabel ipc call tabs toggle demo
+    IpcHandler {
+        target: "tabs"
+
+        function toggle(name: string): void {
+            TabState.toggle(name);
+        }
+
+        function close(name: string): void {
+            TabState.close(name);
+        }
+
+        function state(): string {
+            return JSON.stringify(TabState.opened);
         }
     }
 
@@ -52,7 +70,10 @@ ShellRoot {
                 }
 
                 panels: [
-                    DemoPanel {},
+                    DemoPanel {}
+                ]
+
+                tabs: [
                     AppLauncher {}
                 ]
             }

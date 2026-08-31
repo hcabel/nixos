@@ -1,3 +1,2 @@
 module qs.panels
-AppLauncher 1.0 AppLauncher.qml
 DemoPanel 1.0 DemoPanel.qml
