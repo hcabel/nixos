@@ -3,6 +3,7 @@ Background 1.0 Background.qml
 Bar 1.0 Bar.qml
 ExclusionZone 1.0 ExclusionZone.qml
 Frame 1.0 Frame.qml
+singleton Notifications 1.0 Notifications.qml
 Panel 1.0 Panel.qml
 singleton PanelState 1.0 PanelState.qml
 singleton RailPath 1.0 RailPath.qml

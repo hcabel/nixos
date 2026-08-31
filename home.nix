@@ -22,6 +22,7 @@
   };
 
   home.packages = with pkgs; [
+    libnotify
     vesktop
     plex-desktop
   ];

@@ -1,2 +1,3 @@
 module qs.modules
 Workspaces 1.0 Workspaces.qml
+NotificationBell 1.0 NotificationBell.qml

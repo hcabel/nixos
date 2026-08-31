@@ -2,6 +2,7 @@ import Quickshell
 import Quickshell.Io
 import qs.core
 import qs.modules
+import qs.overlays
 import qs.panels
 import qs.tabs
 
@@ -60,17 +61,26 @@ ShellRoot {
                 insets: frame.insets
             }
 
+            Toasts {
+                screen: instance.modelData
+
+                insets: frame.insets
+            }
+
             Frame {
                 id: frame
 
                 screen: instance.modelData
+
+                barRight: NotificationBell {}
 
                 barCenter: Workspaces {
                     screen: instance.modelData
                 }
 
                 panels: [
-                    DemoPanel {}
+                    DemoPanel {},
+                    NotificationCentre {}
                 ]
 
                 tabs: [

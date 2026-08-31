@@ -16,5 +16,11 @@
 
       ignore_alpha = 0.1; # Should not be 0 or the blur will affect the QS viewport
     }
+    {
+      match.namespace = "^(quickshell:toasts)$";
+      blur = true;
+
+      ignore_alpha = 0.1;
+    }
   ];
 }

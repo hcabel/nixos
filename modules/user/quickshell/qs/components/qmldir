@@ -3,3 +3,6 @@ Button 1.0 Button.qml
 DetailText 1.0 DetailText.qml
 InputBar 1.0 InputBar.qml
 TitleText 1.0 TitleText.qml
+NotificationCard 1.0 NotificationCard.qml
+NotificationRow 1.0 NotificationRow.qml
+NotificationActions 1.0 NotificationActions.qml
