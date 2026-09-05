@@ -170,6 +170,10 @@ Panel {
                         font.pixelSize: Style.fontSizeLabel
                     }
 
+                    HoverHandler {
+                        cursorShape: Qt.PointingHandCursor
+                    }
+
                     TapHandler {
                         onTapped: Notifications.toggleGroup(group.modelData.app)
                     }
@@ -232,6 +236,8 @@ Panel {
 
         HoverHandler {
             id: chipHover
+
+            cursorShape: Qt.PointingHandCursor
         }
 
         TapHandler {

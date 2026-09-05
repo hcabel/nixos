@@ -57,6 +57,10 @@ Item {
         }
     }
 
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
+    }
+
     TapHandler {
         onTapped: PanelState.toggle("right", "notifications")
     }

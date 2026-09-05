@@ -127,6 +127,12 @@ Rectangle {
                             font.pixelSize: 9
                         }
 
+                        HoverHandler {
+                            enabled: root.hovered
+
+                            cursorShape: Qt.PointingHandCursor
+                        }
+
                         TapHandler {
                             // A zero-opacity item still takes input.
                             enabled: root.hovered

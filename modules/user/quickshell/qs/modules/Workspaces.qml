@@ -30,6 +30,7 @@ Item {
     readonly property real dotOccupied: 0.75
     readonly property real nameEmpty: 0.15
     readonly property real nameOccupied: 0.75
+    readonly property real slotHovered: 0.45
 
     implicitWidth: row.implicitWidth
     implicitHeight: Style.insets.top
@@ -59,7 +60,9 @@ Item {
                 readonly property bool named: slot.label !== ""
 
                 function shade(empty, full) {
-                    return Qt.rgba(Style.text.r, Style.text.g, Style.text.b, slot.occupied ? full : empty);
+                    const base = slot.occupied ? full : empty;
+
+                    return Qt.rgba(Style.text.r, Style.text.g, Style.text.b, slotHover.hovered ? Math.max(base, root.slotHovered) : base);
                 }
 
                 // Full strip height, so a 7px bead is still comfortably clickable.
@@ -171,10 +174,18 @@ Item {
                     }
                 }
 
+                HoverHandler {
+                    id: slotHover
+
+                    cursorShape: Qt.PointingHandCursor
+                }
+
                 // dispatch rather than ws.activate(): a workspace Hyprland has
-                // not created yet has no object to activate.
+                // not created yet has no object to activate. The Lua form is
+                // required by Hyprland's new parser, which evaluates the
+                // payload as Lua rather than as a legacy dispatcher name.
                 TapHandler {
-                    onTapped: Hyprland.dispatch("workspace " + slot.number)
+                    onTapped: Hyprland.dispatch(Hyprland.usingLua ? "hl.dsp.focus({ workspace = " + slot.number + " })" : "workspace " + slot.number)
                 }
             }
         }

@@ -45,6 +45,8 @@ RowLayout {
 
             HoverHandler {
                 id: hover
+
+                cursorShape: Qt.PointingHandCursor
             }
 
             TapHandler {
