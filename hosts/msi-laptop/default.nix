@@ -8,6 +8,7 @@
     ../../modules/sys/boot.nix
     ../../modules/sys/network.nix
     ../../modules/sys/gnome.nix
+    ../../modules/sys/plymouth
     ../../modules/sys/hyprland.nix
     ../../modules/sys/hyprlock.nix
     ../../modules/sys/audio.nix

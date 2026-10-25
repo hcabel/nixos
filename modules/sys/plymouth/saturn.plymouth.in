@@ -1,0 +1,14 @@
+[Plymouth Theme]
+Name=Saturn
+Description=Boot stage of the Saturn desktop identity
+ModuleName=script
+
+[script]
+ImageDir=@themedir@
+ScriptFile=@themedir@/saturn.script
+
+# Styling for the console viewer you get by pressing ESC during boot. That view
+# is the only place the real kernel log appears — the theme's own list below is
+# fed by systemd unit status, which is all a Plymouth theme can see.
+ConsoleLogTextColor=0x8b8a99
+ConsoleLogBackgroundColor=0x05070a
