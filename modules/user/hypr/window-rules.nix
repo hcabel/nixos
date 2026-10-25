@@ -9,6 +9,9 @@ let
     dialog = {
       float = true;
     };
+    chat = {
+      workspace = "7 silent";
+    };
   };
 
   tagRules = lib.concatLists (
