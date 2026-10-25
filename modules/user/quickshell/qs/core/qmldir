@@ -2,6 +2,7 @@ module qs.core
 singleton Audio 1.0 Audio.qml
 Background 1.0 Background.qml
 singleton Backlight 1.0 Backlight.qml
+singleton Bluetooth 1.0 Bluetooth.qml
 Bar 1.0 Bar.qml
 ExclusionZone 1.0 ExclusionZone.qml
 Frame 1.0 Frame.qml

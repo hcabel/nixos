@@ -14,6 +14,7 @@
     ../../modules/sys/hyprland.nix
     ../../modules/sys/hyprlock.nix
     ../../modules/sys/audio.nix
+    ../../modules/sys/bluetooth.nix
     ../../modules/sys/users.nix
     ../../modules/sys/nix.nix
     ../../modules/sys/secrets.nix

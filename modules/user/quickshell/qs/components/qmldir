@@ -9,3 +9,5 @@ NotificationActions 1.0 NotificationActions.qml
 BarChip 1.0 BarChip.qml
 Meter 1.0 Meter.qml
 OsdGauge 1.0 OsdGauge.qml
+Switch 1.0 Switch.qml
+BluetoothRow 1.0 BluetoothRow.qml

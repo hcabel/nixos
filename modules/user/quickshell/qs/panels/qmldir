@@ -1,3 +1,4 @@
 module qs.panels
 DemoPanel 1.0 DemoPanel.qml
 NotificationCentre 1.0 NotificationCentre.qml
+BluetoothPanel 1.0 BluetoothPanel.qml

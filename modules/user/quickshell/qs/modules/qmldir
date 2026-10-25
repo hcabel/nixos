@@ -1,5 +1,6 @@
 module qs.modules
 Battery 1.0 Battery.qml
+BluetoothButton 1.0 BluetoothButton.qml
 Clock 1.0 Clock.qml
 Performance 1.0 Performance.qml
 PowerButton 1.0 PowerButton.qml

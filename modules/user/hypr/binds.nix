@@ -29,6 +29,7 @@ in
     (bind "${mod} + Space" ''hl.dsp.exec_cmd("${qscall} tabs toggle AppLauncher")'')
     (bind "${mod} + Escape" ''hl.dsp.exec_cmd("${qscall} tabs toggle Power")'')
     (bind "${mod} + N" ''hl.dsp.exec_cmd("${qscall} panels toggle right notifications")'')
+    (bind "${mod} + B" ''hl.dsp.exec_cmd("${qscall} panels toggle right bluetooth")'')
 
     # ── media keys ─────────────────────────────────────────────────────────
     # The dispatch only applies the change; quickshell watches the values and
