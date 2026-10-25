@@ -1,16 +1,26 @@
 { pkgs, ... }:
 
 let
-  saturn = pkgs.callPackage ./theme.nix {
+  # boot.plymouth.font below takes a single file, and this is it: the initrd
+  # gets exactly one weight. Anything bold or letterspaced in the theme is
+  # pre-rendered rather than asked for at boot — see theme.nix.
+  font = "${pkgs.nerd-fonts.space-mono}/share/fonts/truetype/NerdFonts/SpaceMono/SpaceMonoNerdFont-Regular.ttf";
+
+  sprites = pkgs.callPackage ../saturn-stage/sprites.nix {
     # The same file the bar, hyprpaper and the greeter draw, so all three
     # stages of the boot share one image rather than three copies that drift.
     wallpaper = ../../user/quickshell/qs/saturn-rings.jpg;
 
-    # boot.plymouth.font below takes a single file, and this is it: the initrd
-    # gets exactly one weight. Anything bold or letterspaced in the theme is
-    # pre-rendered rather than asked for at boot — see theme.nix.
-    font = "${pkgs.nerd-fonts.space-mono}/share/fonts/truetype/NerdFonts/SpaceMono/SpaceMonoNerdFont-Regular.ttf";
+    inherit font;
+
+    # UNLOCK replaces BOOT while the LUKS passphrase is being asked for.
+    badges = [
+      "BOOT"
+      "UNLOCK"
+    ];
   };
+
+  saturn = pkgs.callPackage ./theme.nix { inherit sprites font; };
 in
 {
   # Load the Intel driver in the initrd so the splash comes up on the panel's
@@ -29,6 +39,6 @@ in
     theme = "saturn";
     themePackages = [ saturn ];
 
-    font = "${pkgs.nerd-fonts.space-mono}/share/fonts/truetype/NerdFonts/SpaceMono/SpaceMonoNerdFont-Regular.ttf";
+    inherit font;
   };
 }
