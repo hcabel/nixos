@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 
 let
   inherit (import ./lib.nix lib) bind bindOpts;
@@ -19,7 +19,8 @@ let
     ) 10
   );
 
-  terminal = "${pkgs.kitty}/bin/kitty";
+  # hypr-terminal inherits the focused terminal's cwd (modules/user/hypr/terminal.nix)
+  terminal = "hypr-terminal";
   qscall = "qs -c hcabel ipc call";
 in
 {
