@@ -56,9 +56,16 @@
 
     functions = {
       lt = ''
+        argparse 'L=' -- $argv
+        or return
+
         set -l level 2
-        test (count $argv) -gt 0; and set level $argv[1]
-        eza --tree --level=$level --long --icons --git
+        set -q _flag_L; and set level $_flag_L
+
+        set -l path .
+        set -q argv[1]; and set path $argv[1]
+
+        eza --tree --level=$level --long --icons --git $path
       '';
       mkcd = "test -n \"$argv[1]\"; and mkdir -p $argv[1]; and cd $argv[1]";
       fcd = ''
