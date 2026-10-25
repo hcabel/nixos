@@ -8,12 +8,20 @@ let
   bg-surface = "2a2d31";
   text-primary = "faf3e6";
   text-accent = "1e2023";
+
+  # Style.scrim, and the same value the greeter's throwaway compositor paints.
+  # This is what is on screen between the compositor's first frame and hyprpaper
+  # and quickshell drawing the wallpaper, which is a visible moment at login —
+  # so it reads as the greeter's surface continuing rather than a grey step into
+  # a new one. Kept separate from bg-surface: that is a UI grey for chrome, this
+  # is a stage colour shared with the boot splash.
+  bg-stage = "05070a";
 in
 {
   wayland.windowManager.hyprland.settings = {
     config = {
       misc = {
-        background_color = "rgb(${bg-surface})";
+        background_color = "rgb(${bg-stage})";
       };
 
       general = {
