@@ -4,6 +4,7 @@
   imports = [
     ./hardware.nix
     ./gpu.nix
+    ./vm.nix
     ../../modules/sys/boot.nix
     ../../modules/sys/network.nix
     ../../modules/sys/gnome.nix
