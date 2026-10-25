@@ -6,6 +6,10 @@ Rectangle {
 
     signal clicked
 
+    // A button that only exists to be a surface: no cursor, no hover lift, no
+    // taps. Chips in the bar that merely display something use this.
+    property bool interactive: true
+
     readonly property bool hovered: hover.hovered
     readonly property bool pressed: tap.pressed
 
@@ -23,11 +27,16 @@ Rectangle {
 
     HoverHandler {
         id: hover
+
+        enabled: root.interactive
+
         cursorShape: Qt.PointingHandCursor
     }
 
     TapHandler {
         id: tap
+
+        enabled: root.interactive
 
         onTapped: root.clicked()
     }

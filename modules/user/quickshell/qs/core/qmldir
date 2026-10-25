@@ -1,4 +1,5 @@
 module qs.core
+singleton Audio 1.0 Audio.qml
 Background 1.0 Background.qml
 Bar 1.0 Bar.qml
 ExclusionZone 1.0 ExclusionZone.qml
@@ -9,5 +10,6 @@ singleton PanelState 1.0 PanelState.qml
 singleton RailPath 1.0 RailPath.qml
 RailShadow 1.0 RailShadow.qml
 singleton Style 1.0 Style.qml
+singleton SystemStats 1.0 SystemStats.qml
 Tab 1.0 Tab.qml
 singleton TabState 1.0 TabState.qml

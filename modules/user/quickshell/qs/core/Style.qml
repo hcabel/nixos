@@ -22,6 +22,7 @@ Singleton {
     readonly property int duration: 250
     readonly property real corner: 18
     readonly property real cornerSmall: 13
+    readonly property real cornerChip: 5
 
     readonly property real padding: 18
     readonly property real gap: 8
@@ -29,6 +30,8 @@ Singleton {
     readonly property int fontSizeTitle: 18
     readonly property int fontSizeDetail: 11
     readonly property int fontSizeLabel: 10
+
+    readonly property real chipHeight: 20
 
     readonly property int workspaceCount: 9
 
@@ -39,7 +42,7 @@ Singleton {
     })
 
     readonly property var insets: ({
-        top: 30,
+        top: 42,
         bottom: 10,
         left: 10,
         right: 10

@@ -72,7 +72,13 @@ ShellRoot {
 
                 screen: instance.modelData
 
-                barRight: NotificationBell {}
+                barRight: [
+                    Performance {},
+                    Battery {},
+                    Volume {},
+                    Clock {},
+                    PowerButton {}
+                ]
 
                 barCenter: Workspaces {
                     screen: instance.modelData
