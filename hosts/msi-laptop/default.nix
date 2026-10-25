@@ -18,6 +18,7 @@
     ../../modules/sys/secrets.nix
     ../../modules/sys/font.nix
     ../../modules/sys/swap.nix
+    ../../modules/sys/gaming.nix
   ];
 
   networking.hostName = "msi-laptop";

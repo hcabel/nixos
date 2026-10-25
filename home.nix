@@ -11,6 +11,7 @@
     modules/user/terminal.nix
     modules/user/firefox.nix
     modules/user/quickshell
+    modules/user/gaming.nix
   ];
 
   gtk = {
