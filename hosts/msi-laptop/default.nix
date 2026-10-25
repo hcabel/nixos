@@ -41,6 +41,9 @@
   };
 
   programs.firefox.enable = true;
+  # the module (unlike systemPackages) opens UDP/TCP 53317 for discovery
+  programs.localsend.enable = true;
+
   environment.systemPackages = with pkgs; [
     vim
     git
