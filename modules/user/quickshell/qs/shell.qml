@@ -83,6 +83,21 @@ ShellRoot {
                 insets: frame.insets
             }
 
+            // Whether a fullscreen window owns this screen, and the readout
+            // that has to come from an overlay surface when one does: the
+            // Frame, rail and Osd tab included, sits below it.
+            Fullscreen {
+                id: fullscreenState
+
+                screen: instance.modelData
+            }
+
+            OsdOverlay {
+                screen: instance.modelData
+
+                fullscreen: fullscreenState.active
+            }
+
             Frame {
                 id: frame
 

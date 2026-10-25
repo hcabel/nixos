@@ -5,6 +5,7 @@ singleton Backlight 1.0 Backlight.qml
 Bar 1.0 Bar.qml
 ExclusionZone 1.0 ExclusionZone.qml
 Frame 1.0 Frame.qml
+Fullscreen 1.0 Fullscreen.qml
 singleton Notifications 1.0 Notifications.qml
 singleton OsdState 1.0 OsdState.qml
 Panel 1.0 Panel.qml

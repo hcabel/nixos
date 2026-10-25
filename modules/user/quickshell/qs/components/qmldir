@@ -8,3 +8,4 @@ NotificationRow 1.0 NotificationRow.qml
 NotificationActions 1.0 NotificationActions.qml
 BarChip 1.0 BarChip.qml
 Meter 1.0 Meter.qml
+OsdGauge 1.0 OsdGauge.qml

@@ -22,5 +22,11 @@
 
       ignore_alpha = 0.1;
     }
+    {
+      match.namespace = "^(quickshell:osd)$";
+      blur = true;
+
+      ignore_alpha = 0.1;
+    }
   ];
 }
