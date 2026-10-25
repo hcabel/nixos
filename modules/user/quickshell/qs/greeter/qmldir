@@ -1,0 +1,8 @@
+module qs.greeter
+singleton Session 1.0 Session.qml
+GreeterSurface 1.0 GreeterSurface.qml
+Lockup 1.0 Lockup.qml
+Scrim 1.0 Scrim.qml
+PasswordField 1.0 PasswordField.qml
+SessionChips 1.0 SessionChips.qml
+StatusRow 1.0 StatusRow.qml

@@ -47,4 +47,38 @@ Singleton {
         left: 10,
         right: 10
     })
+
+    // --- Saturn stage identity -------------------------------------------
+    // Shared by the greeter (qs.greeter) and, baked into pixels at build time,
+    // by the Plymouth theme in modules/sys/plymouth. The two stages have to
+    // agree on these numbers, or the lockup jumps as the splash hands over.
+
+    // Far stop of the accent gradient. Named for its role rather than its hue,
+    // to match accent/danger/neutral above. Build gradients where they are
+    // used: a Gradient is a QObject, and sharing one across windows reparents
+    // it out from under the first.
+    readonly property color accentAlt: "#f28fad"
+
+    // The scrim that darkens the wallpaper under the content column: three
+    // stops along a 100 degree vector, near edge to far.
+    readonly property color scrim: "#05070a"
+    readonly property real scrimNear: 0.90
+    readonly property real scrimMid: 0.60
+    readonly property real scrimFar: 0.05
+
+    // Stage surfaces are authored at this size and scale uniformly from it, so
+    // every coordinate below is in design pixels.
+    readonly property real designWidth: 1920
+    readonly property real designHeight: 1080
+
+    readonly property var lockup: ({
+        x: 130,
+        y: 286,
+        contentY: 380,
+        markSize: 44,
+        gap: 14
+    })
+
+    readonly property int fontSizeClock: 96
+    readonly property int fontSizeHero: 34
 }
