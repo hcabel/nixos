@@ -11,3 +11,4 @@ Meter 1.0 Meter.qml
 OsdGauge 1.0 OsdGauge.qml
 Switch 1.0 Switch.qml
 BluetoothRow 1.0 BluetoothRow.qml
+PowerModeRow 1.0 PowerModeRow.qml

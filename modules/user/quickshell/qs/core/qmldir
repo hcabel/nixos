@@ -11,6 +11,7 @@ singleton Notifications 1.0 Notifications.qml
 singleton OsdState 1.0 OsdState.qml
 Panel 1.0 Panel.qml
 singleton PanelState 1.0 PanelState.qml
+singleton PowerMode 1.0 PowerMode.qml
 singleton RailPath 1.0 RailPath.qml
 RailShadow 1.0 RailShadow.qml
 singleton Style 1.0 Style.qml

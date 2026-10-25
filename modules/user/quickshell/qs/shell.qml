@@ -106,6 +106,7 @@ ShellRoot {
                 barRight: [
                     Performance {},
                     Battery {},
+                    PowerModeButton {},
                     BluetoothButton {},
                     Volume {},
                     Clock {},
@@ -119,7 +120,8 @@ ShellRoot {
                 panels: [
                     DemoPanel {},
                     NotificationCentre {},
-                    BluetoothPanel {}
+                    BluetoothPanel {},
+                    PowerModePanel {}
                 ]
 
                 tabs: [

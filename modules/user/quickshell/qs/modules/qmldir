@@ -4,5 +4,6 @@ BluetoothButton 1.0 BluetoothButton.qml
 Clock 1.0 Clock.qml
 Performance 1.0 Performance.qml
 PowerButton 1.0 PowerButton.qml
+PowerModeButton 1.0 PowerModeButton.qml
 Volume 1.0 Volume.qml
 Workspaces 1.0 Workspaces.qml
