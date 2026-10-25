@@ -30,6 +30,29 @@ in
     (bind "${mod} + Escape" ''hl.dsp.exec_cmd("${qscall} tabs toggle Power")'')
     (bind "${mod} + N" ''hl.dsp.exec_cmd("${qscall} panels toggle right notifications")'')
 
+    # ── media keys ─────────────────────────────────────────────────────────
+    # The dispatch only applies the change; quickshell watches the values and
+    # raises its own readout, so a change made anywhere else surfaces too.
+    (bindOpts "XF86AudioRaiseVolume" ''hl.dsp.exec_cmd("${qscall} osd volume up")'' {
+      repeat = true;
+      locked = true;
+    })
+    (bindOpts "XF86AudioLowerVolume" ''hl.dsp.exec_cmd("${qscall} osd volume down")'' {
+      repeat = true;
+      locked = true;
+    })
+    (bindOpts "XF86AudioMute" ''hl.dsp.exec_cmd("${qscall} osd volume mute")'' {
+      locked = true;
+    })
+    (bindOpts "XF86MonBrightnessUp" ''hl.dsp.exec_cmd("${qscall} osd brightness up")'' {
+      repeat = true;
+      locked = true;
+    })
+    (bindOpts "XF86MonBrightnessDown" ''hl.dsp.exec_cmd("${qscall} osd brightness down")'' {
+      repeat = true;
+      locked = true;
+    })
+
     # ── window management ──────────────────────────────────────────────────
     (bind "${mod} + W" "hl.dsp.window.close()")
     (bind "${mod} + F" ''hl.dsp.window.float({ action = "toggle" })'')

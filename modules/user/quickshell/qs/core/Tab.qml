@@ -7,7 +7,12 @@ Item {
     property string edge: "top"
     property real offset: 0
     property bool wantsFocus: false
-    readonly property bool open: TabState.isOpen(root.name)
+    property bool open: TabState.isOpen(root.name)
+
+    // Chrome rather than a surface to click. Masking the OSD would swallow
+    // clicks meant for the window it floats over.
+    property bool masked: true
+
     readonly property bool vertical: root.edge === "left" || root.edge === "right"
     property real padding: Style.padding
     property real length: 0

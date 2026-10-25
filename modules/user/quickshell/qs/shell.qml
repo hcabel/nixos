@@ -41,6 +41,22 @@ ShellRoot {
         }
     }
 
+    // qs -c hcabel ipc call osd volume up
+    IpcHandler {
+        target: "osd"
+
+        function volume(dir: string): void {
+            if (dir === "mute")
+                Audio.toggleMute();
+            else
+                Audio.nudge(dir === "up" ? 1 : -1);
+        }
+
+        function brightness(dir: string): void {
+            Backlight.nudge(dir === "up" ? 1 : -1);
+        }
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -91,7 +107,8 @@ ShellRoot {
 
                 tabs: [
                     AppLauncher {},
-                    Power {}
+                    Power {},
+                    Osd {}
                 ]
             }
         }

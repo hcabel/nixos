@@ -53,7 +53,7 @@ PanelWindow {
         const out = [];
 
         for (let i = 0; i < cs.length; i++) {
-            if (cs[i].open)
+            if (cs[i].open && cs[i].masked)
                 out.push(cs[i]);
         }
 
