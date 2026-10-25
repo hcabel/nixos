@@ -1,0 +1,131 @@
+# Saturn, stage one. The layout below is the same grid Plymouth's saturn.script
+# draws on (and greeter/GreeterSurface.qml after it), in design pixels at
+# 1920x1080: lockup at 130,286, content column at 130,380, the 520-wide bar at
+# 130,424, scrolling text from 470 down. gfxpayload=keep hands this framebuffer
+# straight to the kernel, so the countdown bar here and the boot progress bar in
+# the splash are the same pixels and the handover does not move anything.
+
+desktop-image: "background.png"
+desktop-image-scale-method: "crop"
+desktop-color: "#05070a"
+
+# GRUB draws its own "GNU GRUB version ..." banner into title-text otherwise.
+title-text: ""
+
+terminal-font: "Saturn Regular 14"
+
+# Full screen, and this is load-bearing rather than cosmetic.
+#
+# view.c gives the terminal a rect of 70% of the screen, centred, and builds a
+# fresh view every time the menu is — once per submenu entered, once when the
+# menu is left to boot. gfxterm clears that rect each time, which is the black
+# box in the middle of the screen.
+#
+# Clearing is only half of it. The lockup, the header and the menu are drawn by
+# the gfxmenu view straight to the display rather than through gfxterm, so a
+# clear only repaints what is inside the terminal window. At 70% centred the
+# lockup at x=130 falls outside it, and wiping the middle back to wallpaper
+# would strand the lockup and the left edge of the menu on top of it. Full
+# screen is what makes the repaint clean everything at once.
+terminal-left: "0"
+terminal-top: "0"
+terminal-width: "100%"
+terminal-height: "100%"
+
++ image {
+    left = 130
+    top = 286
+    file = "lockup.png"
+}
+
+# Left half of the content line. Pre-rendered rather than a label, because
+# GRUB has no letter-spacing and this has to match Plymouth's header.
++ image {
+    left = 130
+    top = 380
+    file = "header.png"
+}
+
+# Right half of the same line. A timeout label's text is a printf template that
+# GRUB fills with the seconds remaining, so the phrasing is ours to choose; the
+# @TIMEOUT_NOTIFICATION_*@ macros are not substituted here and would print raw.
++ label {
+    id = "__timeout__"
+    left = 130
+    top = 380
+    width = 520
+    align = "right"
+    color = "#99938a"
+    font = "Saturn Regular 12"
+    text = "booting in %ds"
+}
+
+# Same position and width as Plymouth's progress bar.
+#
+# Drawn from flat colours rather than nine-sliced pixmaps, and that is a
+# correctness point rather than a stylistic one. gui_progress_bar.c sizes the
+# highlight box as `trackheight - hl_v_pad`, where `trackheight` is the
+# component height minus the track box's own padding. A 2px bar built from 1x1
+# tiles gives `2 - 2 - 2 = -2`, the code does not guard against negative
+# dimensions, and the negative size reaches a scaled blit as a garbage block.
+# The colour path is plain fill_rect calls with no box arithmetic at all.
+#
+# The border is drawn one pixel *outside* the component rect, so the visible
+# band is 4px. Giving it the track colour is what keeps that reading as track
+# rather than as an outline around a box.
++ progress_bar {
+    id = "__timeout__"
+    left = 130
+    top = 424
+    width = 520
+    height = 2
+    fg_color = "#7aa2f7"
+    bg_color = "#211f2e"
+    border_color = "#211f2e"
+}
+
+# Where the splash scrolls its unit names.
+#
+# Two things about gui_list.c drive every number here, and neither is enforced
+# by GRUB, so changing one without the other breaks the layout silently:
+#
+#   1. The selected row's box is given `item_height` as its *content* size and
+#      its nine-slice padding sits outside that, so the highlight is
+#      `item_height + 2 * pad` tall while rows only advance by
+#      `item_height + item_spacing`. Two consequences:
+#
+#          item_spacing >= 2 * pad      # or highlights overlap their neighbour
+#          the highlight overhangs its own text row by `pad` at each end
+#
+#      The second is why the slices are 2px rather than a rounded corner's
+#      worth: at a 13px radius the highlight stood 26px taller than the row it
+#      marked and visibly inflated out of nothing as the selection arrived. At
+#      2px the overhang is invisible and the band simply sits on its row.
+#
+#   2. Item text is drawn at `item_top + pad`, and item_padding insets it
+#      horizontally only. So the block is offset up and left of where its text
+#      lands: top 468 + 2 puts the first entry's text on 470, the line
+#      saturn.script starts its log at, and left 110 + 2 + 18 puts the text
+#      column on 130 with the accent rule standing in the gutter at 110.
+#
+# width 560 spans 110-670, bleeding 20px either side of the 130-650 content
+# column the header and the bar occupy, and leaves 520px of text — comfortably
+# more than the longest "NixOS - Configuration N (<date> - <version>)".
++ boot_menu {
+    left = 110
+    top = 468
+    width = 560
+    height = 540
+    item_font = "Saturn Regular 16"
+    selected_item_font = "Saturn Regular 16"
+    item_color = "#99938a"
+    selected_item_color = "#faf3e6"
+    item_height = 28
+    item_spacing = 8
+    item_padding = 18
+    item_icon_space = 0
+    icon_width = 0
+    icon_height = 0
+    selected_item_pixmap_style = "select-*.png"
+    scrollbar = false
+}

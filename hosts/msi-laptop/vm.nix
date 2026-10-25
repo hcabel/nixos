@@ -24,5 +24,10 @@
     # serial console — so the splash this repo exists to build would never be
     # visible in the one place it is safe to preview.
     virtualisation.qemu.consoles = [ "tty0" ];
+
+    # Boot the VM through the real bootloader instead of qemu -kernel, which is
+    # the only way the GRUB theme in modules/sys/grub is visible here at all.
+    virtualisation.useBootLoader = true;
+    virtualisation.useEFIBoot = true;
   };
 }

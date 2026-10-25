@@ -6,6 +6,7 @@
     ./gpu.nix
     ./vm.nix
     ../../modules/sys/boot.nix
+    ../../modules/sys/grub
     ../../modules/sys/network.nix
     ../../modules/sys/gnome.nix
     ../../modules/sys/greeter

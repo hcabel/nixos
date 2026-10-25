@@ -1,8 +1,11 @@
 { ... }:
 
 {
-  boot.loader.systemd-boot.enable = true;
+  # The bootloader itself, and the theme on its menu, live in modules/sys/grub.
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Five seconds, same as the systemd-boot menu this replaced.
+  boot.loader.timeout = 5;
 
   # Pinned rather than changed: this is already the default in nixpkgs 26.05,
   # and this machine has been booting on the systemd initrd all along. It is
