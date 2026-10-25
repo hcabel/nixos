@@ -35,7 +35,13 @@ let
   # once greetd has accepted a password and is ready to launch the session —
   # the compositor has to go with it, or greetd waits forever.
   greeterInner = pkgs.writeShellScript "saturn-greeter-inner" ''
-    ${pkgs.quickshell}/bin/quickshell -p /etc/greetd/qs/greeter.qml
+    # Hyprland has already pointed its stdio at its own log under /run by the
+    # time it runs this, and the child inherits it — so without the redirect a
+    # greeter that fails to load leaves its reason in a file the next boot
+    # deletes. Tagged apart from saturn-greeter so the shell's errors are not
+    # buried in the compositor's debug log.
+    ${config.systemd.package}/bin/systemd-cat -t saturn-greeter-qs \
+      ${pkgs.quickshell}/bin/quickshell --no-color -p /etc/greetd/qs/greeter.qml
     exec ${hyprland}/bin/hyprctl dispatch exit
   '';
 
@@ -98,6 +104,26 @@ let
       ${hyprland}/bin/start-hyprland
   '';
 
+  # The same treatment, for the session the greeter hands over to. greetd gives
+  # every session process the VT as its stdio, not just the greeter, so a
+  # compositor coming up prints over the display it is about to take — and uwsm
+  # is considerably more talkative on the way up than start-hyprland is, a dozen
+  # lines of unit-directory bookkeeping before Hyprland says anything at all.
+  # The greeter has been blanking the console since it was written; the session
+  # never did, which is the terminal text visible between the two.
+  #
+  # Takes the journal tag as its first argument and the real argv after it, so
+  # one script covers every entry in sessionsJson rather than each session
+  # needing a wrapper of its own.
+  sessionWrapper = pkgs.writeShellScript "saturn-session" ''
+    printf '\033[2J\033[H\033[?25l' >&2
+
+    tag="$1"
+    shift
+
+    exec ${config.systemd.package}/bin/systemd-cat -t "$tag" "$@"
+  '';
+
   # Everything the greeter needs to know about this machine. Generated rather
   # than written into the QML because that tree is also mirrored into ~/nixos
   # for hot reload, and store paths must not leak into it.
@@ -135,6 +161,9 @@ let
           # Every session on this machine has space-free arguments; the %-codes
           # the desktop entry spec allows are dropped rather than passed on.
           #
+          # Exec goes behind sessionWrapper, with the session id as the journal
+          # tag, so nothing a compositor prints on the way up reaches tty1.
+          #
           # The XDG variables matter: hyprland-uwsm sets its own via uwsm, but
           # gnome.desktop is a bare gnome-session that GDM would normally have
           # launched with this environment already in place.
@@ -143,10 +172,11 @@ let
             --arg label "''${name:-$id}" \
             --arg exec "$exec" \
             --arg desktop "$desktop" \
+            --arg wrapper "${sessionWrapper}" \
             '{
                id: $id,
                label: $label,
-               command: ($exec | split(" ") | map(select(length > 0 and (startswith("%") | not)))),
+               command: ([$wrapper, $id] + ($exec | split(" ") | map(select(length > 0 and (startswith("%") | not))))),
                environment: (
                  [ "XDG_SESSION_TYPE=wayland", "XDG_SESSION_DESKTOP=\($id)" ]
                  + (if $desktop == "" then [] else [ "XDG_CURRENT_DESKTOP=\($desktop)" ] end)
@@ -168,6 +198,42 @@ let
              sessions: (sort_by(.id) | sort_by(.id != $preferred))
            }' entries > $out
       '';
+
+  # The greeter tree is published into the store rather than symlinked (see the
+  # header), so a qmldir entry naming a file that is not in the store breaks
+  # nothing at build time — it produces a login screen that loads no surface at
+  # all and shows the compositor's background colour, with the QML error going
+  # nowhere. The usual cause is a component that was written but never
+  # `git add`ed, which leaves the flake unable to see it while the qmldir edit
+  # registering it sails through.
+  #
+  # Checked here so that mistake is a failed rebuild rather than a machine you
+  # cannot log into.
+  greeterQs = pkgs.runCommandLocal "greetd-qs" { src = ../../user/quickshell/qs; } ''
+    missing=
+    for qmldir in $(find $src -name qmldir); do
+      dir=$(dirname "$qmldir")
+
+      # Every type line ends in the file backing it; module/plugin/depends
+      # lines and comments do not, so the suffix is the whole filter.
+      while read -r line || [ -n "$line" ]; do
+        file=''${line##* }
+        case "$file" in
+          *.qml) [ -e "$dir/$file" ] || missing="$missing ''${dir#$src/}/$file" ;;
+        esac
+      done < "$qmldir"
+    done
+
+    if [ -n "$missing" ]; then
+      echo "greeter QML tree is incomplete - these qmldir entries have no file:" >&2
+      for f in $missing; do echo "  $f" >&2; done
+      echo >&2
+      echo "If you just created them they are untracked: git add them so the flake can see them." >&2
+      exit 1
+    fi
+
+    cp -r $src $out
+  '';
 in
 {
   services.greetd = {
@@ -193,7 +259,7 @@ in
 
   # The greeter's copy of the shell. Read-only, world-readable, and identical
   # to what the bar runs, so components stay shared rather than forked.
-  environment.etc."greetd/qs".source = ../../user/quickshell/qs;
+  environment.etc."greetd/qs".source = greeterQs;
   environment.etc."greetd/config/hypr/hyprland.lua".source = greeterLua;
   environment.etc."greetd/sessions.json".source = sessionsJson;
 
